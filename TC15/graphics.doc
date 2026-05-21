@@ -1,0 +1,317 @@
+
+
+                    TURBO C GRAPHICS INFORMATION
+                    ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  This file contains information about the Turbo C graphics that is
+  not contained in the Additions and Enhancements manual. Please
+  read this file in its entirety, referring to it when you encounter
+  problems not addressed in the Additions and Enhancements manual.
+
+TABLE OF CONTENTS
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  1. Adding GRAPHICS.LIB to the Turbo C Libraries
+  2. Switching to Text Mode
+  3. Internal Graphics Driver Pointers
+  4. Graphics Examples on CGA or Hercules
+  5. IBM 8514 Support
+  6. Compaq III Portable
+  7. Loading Drivers and Fonts at Runtime
+  8. How to Compile BGIDEMO
+
+
+1. ADDING GRAPHICS.LIB TO THE TURBO C LIBRARIES
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  When you use graphics in a Turbo C program you have to either
+  include graphics.lib on the command line (if using TCC:
+  "tcc foo.c graphics.lib") or create a project with your program
+  and graphics.lib in it (TC).  To avoid doing this, you can use 
+  tlib to add the graphics library modules to the standard C*.LIB 
+  libraries.  This may be accomplished easily by one or more of 
+  the following tlib commands (don't leave out the ".lib" extension 
+  on graphics.lib):
+
+  tlib cs +graphics.lib                 (small model library)
+  tlib cc +graphics.lib                 (compact model library)
+  tlib cm +graphics.lib                 (medium model library)
+  tlib cl +graphics.lib                 (large model library)
+  tlib ch +graphics.lib                 (huge model library)
+
+  It is probably a good idea to add the graphics modules to all the
+  standard library files, but if you know you will be using only
+  some memory models with graphics programs, or you are short on
+  disk space, you might choose to change only some library files.
+
+  Your current directory must be the directory where you keep the C
+  libraries, or you must include complete paths in the tlib command
+  line(s). For example:
+
+  cd \turboc\lib
+  tlib cm +graphics.lib
+
+  or
+
+  tlib \turboc\lib\cm +\turboc\lib\graphics.lib
+
+  Note that tlib will rename the original C*.LIB library to C*.BAK;
+  you might want to delete this file, or keep it around for
+  reference.
+
+
+2. SWITCHING TO TEXT MODE
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  There are two routines that will switch the screen to text mode:
+  "textmode" and "restorecrtmode". "textmode" should be used only
+  when the screen is in the text mode (presumably to change to a
+  different text mode), "restorecrtmode" should be used only when
+  the screen is in graphics mode (to escape temporarily to text
+  mode). These are the only contexts where textmode and
+  restorecrtmode may be used.
+
+
+3. INTERNAL GRAPHICS DRIVER POINTERS
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  There are several far function pointers that are used by the
+  graphics library to access the low-level graphics routines. These
+  pointers are set to point to the internal graphics drivers when
+  "initgraph" is called. Subsequent calls to the graphics routines
+  will then invoke these internal drivers by calls through the
+  function pointers. The pointers are not tested for validity (to
+  handle the case when a graphics routine might be called before
+  initgraph), as that would introduce a lot of extra code, and slow
+  down those graphics routines.
+
+  In the compact, medium, large, and huge models, these pointers
+  are, therefore, initialized to point to a routine that will
+  display an error message, and abort the program (via exit()), in
+  case a graphics routine is called before initgraph.
+
+  In the tiny model there is no way to initialize far pointers to
+  point to a routine in the code. Furthermore, the tiny model shares
+  the standard library with the small model. Therefore, the graphics
+  driver pointers cannot be initialized in the tiny and small
+  models, and programs that attempt to call a graphics routine
+  before calling initgraph will most likely crash the machine.
+
+  The following graphics routines may be called before initgraph (or
+  after closegraph): detectgraph, getmoderange, setgraphbufsize,
+  registerbgidriver and registerfarbgidriver, registerbgifont and
+  registerfarbgifont.
+
+
+4. GRAPHICS EXAMPLES ON CGA OR HERCULES
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Most of the graphics examples in the manual (addendum) will work
+  best with an EGA or VGA adapter. When run on a CGA or monochrome
+  adapter, they might not produce the expected results. Therefore,
+  when running on non-EGA/VGA hardware, use the value "1" (one) in
+  place of the symbolic color constants, and use the following code
+  as the example for the arc, circle, ellipse, getarccoords,
+  getaspectratio, and pieslice routines:
+
+
+  #include <graphics.h>
+
+  main()
+  {
+    int graphdriver = DETECT, graphmode;
+
+    struct arccoordstype    arcinfo;
+    int     xasp, yasp;
+    long    xlong;
+
+    initgraph(&graphdriver, &graphmode, "");
+
+    /* draw a 90 degree arc with radius of 50 */
+    arc( 100, 120, 0, 89, 50 );
+
+    /* get the coordinates of the arc and connect ends */
+    getarccoords( & arcinfo );
+    line( arcinfo.xstart, arcinfo.ystart, arcinfo.xend, arcinfo.yend );
+
+    /* draw a circle */
+    circle( 100, 120, 80 );
+
+    /* draw an ellipse inside the circle */
+    ellipse( 100, 120, 0, 359, 80, 20 );
+
+    /* draw and fill a pieslice */
+    setfillstyle( HATCH_FILL, 1 );
+    pieslice( 200,  50, 0, 134, 49 );
+    setfillstyle( SLASH_FILL, 1 );
+    pieslice( 200,  50, 135, 225, 49 );
+    setfillstyle( WIDEDOT_FILL, 1 );
+    pieslice( 200,  50, 225, 360, 49 );
+
+    /* draw a "square" rectangle */
+    getaspectratio( & xasp, & yasp );
+    xlong = ( 50L * (long) yasp ) / (long) xasp;
+    rectangle( 0, 0, (int) xlong, 50 );
+
+    getch();
+    closegraph();
+  }
+
+
+5. IBM-8514 SUPPORT
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  An additional driver has been included with the BGI graphics
+  library. This driver interfaces to the IBM-8514 graphics card.
+  This is a new, hi-res graphics card capable of resolutions up to
+  1024x768 pixels, and a color palette of 256 colors from a list of
+  256K colors. The driver file name is IBM8514.BGI.
+
+  The IBM-8514 graphics card CANNOT be properly autodetected (it will
+  be recognized as VGA by the autodetection logic). Therefore, to
+  use the IBM-8514 card, the graphdriver variable must be assigned
+  the value IBM8514 (which is defined in GRAPHICS.H) when initgraph
+  is called. Detectgraph, or DETECT with initgraph should not be
+  used with the IBM-8514 (unless the emulated VGA mode is desired).
+
+  The supported modes of the IBM-8514 card are IBM8514LO (640x480
+  pixels), and IBM8514HI (1024x768 pixels). Both mode constants are
+  defined in GRAPHICS.H.
+
+  The IBM-8514 uses three 6-bit values to define colors. There is a
+  6-bit Red, Green, and Blue component for each defined color. To
+  allow the user to define colors for the IBM-8514, a new routine
+  was added to the BGI library. The routine is prototyped in
+  GRAPHICS.H as follows:
+
+
+  void far setrgbpalette(int colornum, int red, int green, int blue);
+
+
+  The argument colornum defines the palette entry to be loaded.
+  colornum is an integer from 0-255 (decimal). The arguments red,
+  green, and blue define the component colors of the palette entry.
+  Only the lower byte of these values is used, and out of this byte,
+  only the 6 most significant bits are loaded in the palette.
+
+  The other palette manipulation routines of the graphics library
+  may not be used with the IBM-8514 driver (i.e., setallpalette,
+  setpalette, getpalette).
+
+  For compatability with the balance of the IBM graphics adapters,
+  the BGI driver defines the first 16 palette entries of the
+  IBM-8514 to the default colors of the EGA/VGA. These values can be
+  used as is, or changed using the setrgbpalette routine.
+
+  The floodfill routine will not work with the IBM-8514 driver.
+
+
+6. COMPAQ III PORTABLE
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  If you are using the Compaq III Portable, enter the following
+  command at the DOS prompt before trying to use the 400 line mode:
+
+  SET SEL=CGA
+
+
+7. LOADING DRIVERS AND FONTS AT RUNTIME
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  In addition to linking in drivers and fonts (converted by BGIOBJ),
+  you may load the driver and/or font files directly into memory at
+  runtime, and then register them through the registerfarbgidriver
+  and/or registerfarbgifont routines. The following example illustrates
+  this techique:
+
+
+  /* example of loading a font file into memory */
+
+  #include <graphics.h>
+  #include <io.h>
+  #include <fcntl.h>
+  #include <stdio.h>
+  #include <conio.h>
+  #include <stdlib.h>
+  #include <process.h>
+  #include <alloc.h>
+
+  void main()
+  {
+    void *   gothic_fontp;  /* points to the font buffer in memory */
+    int      handle;        /* file handle used for I/O */
+    unsigned fsize;         /* size of file (and buffer) */
+
+    int errorcode;
+    int graphdriver;
+    int graphmode;
+
+                                  /* open font file */
+    handle = open("GOTH.CHR", O_RDONLY|O_BINARY);
+    if (handle == -1)
+    {
+      printf("unable to open font file 'GOTH.CHR'\n");
+      exit(1);
+    };
+    fsize = filelength(handle);           /* find out size of the file */
+    gothic_fontp = malloc(fsize);         /* allocate buffer */
+    if (gothic_fontp == NULL)
+    {
+      printf("unable to allocate memory for font file 'GOTH.CHR'\n");
+      exit(1);
+    };
+                                      /* read font into memory */
+    if (read(handle, gothic_fontp, fsize) != fsize)
+    {
+      printf("unable to read font file 'GOTH.CHR'\n");
+      exit(1);
+    };
+    close(handle);                        /* close font file */
+                                          /* register font */
+    if (registerfarbgifont(gothic_fontp) != GOTHIC_FONT)
+    {
+      printf("unable to register font file 'GOTH.CHR'\n");
+      exit(1);
+    };
+
+                                      /* detect and initialize graphix */
+    graphdriver = DETECT;
+    initgraph(&graphdriver, &graphmode, "..");
+    errorcode = graphresult();
+    if (errorcode != grOk)
+    {
+      printf("graphics error: %s\n",grapherrormsg(errorcode));
+      exit(1);
+    };
+
+    settextjustify(CENTER_TEXT, CENTER_TEXT);
+    settextstyle(GOTHIC_FONT, HORIZ_DIR, 4);
+    outtextxy( getmaxx() / 2, getmaxy() / 2, "Borland Graphics Interface");
+    getch();                              /* hit a key to terminate */
+
+    closegraph();                         /* shut down graphics system */
+  }
+
+
+8. HOW TO COMPILE BGIDEMO
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  With TC.EXE:
+
+    1. Run TC.EXE
+    2. In the Project pulldown menu specify the project name
+       "BGIDEMO.PRJ"
+    3. From the main menu select the Run option
+
+  With TCC.EXE:
+
+    Compile from DOS with the following command line:
+
+    TCC bgidemo graphics.lib
+
+  Note that BGIDEMO will not run in the tiny model because of that
+  model's memory limitations.
+
+
+END
+ÄÄÄ

@@ -1,0 +1,582 @@
+
+
+                        WELCOME TO TURBO C 1.5
+                        ----------------------
+
+This README file contains information that will be useful and/or of
+interest to you. Please read it in its entirety, referring to it
+when you encounter problems not addressed in the manuals.
+
+
+TABLE OF CONTENTS
+-----------------
+ 1. Important Notes
+ 2. How to Get Help
+ 3. Corrections/Additions to the Manuals
+ 4. Setting up Turbo C on a Floppy Disk System
+ 5. Interfacing Turbo C and Turbo Pascal 4.0
+ 6. Interfacing Turbo C and Turbo Prolog
+ 7. Using Turbo C With MSDOS 3.2 and a Floating Point Coprocessor
+ 8. How to Compile MicroCalc
+ 9. Miscellaneous Information
+10. Files on the Disks
+
+
+1. IMPORTANT NOTES
+------------------
+
+- If you are going to load Turbo C onto a hard disk, you can use the
+  file INSTALL.BAT (on the INTEGRATED DEVELOPMENT ENVIRONMENT
+  distribution disk) to automatically create the correct
+  subdirectories on your hard disk and copy all the Turbo C files
+  into the appropriate directories.
+
+- The program TCINST.COM has been changed to an .EXE file.  You
+  should delete the TCINST.COM program before trying to run the new
+  TCINST.EXE (otherwise MS-DOS will actually run the old one).  This
+  file will be deleted for you if you use the INSTALL batch file.
+  This note applies only if you already have Turbo C 1.0.
+
+- If you get a message that the compiler is unable to open a file
+  you know is there, the problem may be that the compiler has run
+  out of MS-DOS file handles.  This is most likely if you have lots
+  of #include files and/or are running from the integrated
+  development environment.  To allow the compiler to open as many
+  files as possible, edit the file CONFIG.SYS in the root directory
+  of the disk that you start your computer with, and add the
+  statement:
+
+    FILES = 20
+
+  Then reboot your computer.
+
+- The file GRAPHICS.DOC contains important new information on
+  graphics functions, examples, drivers, etc.  Make sure you read it
+  before using the graphics library.
+
+- When copying the *.H files from the HEADER FILES/LIBRARIES disk,
+  be sure to copy the SYS sub-directory and its contents.
+
+- Because of the limited memory available in the Tiny model, BGIDEMO
+  will not run under this model.
+
+- The file TCHELP.TCH is now on disk 5.  If you are running TC with
+  floppy disks and want to use the context sensitive help facility,
+  make sure that you set the Turbo C Directory to the disk with the
+  help file on it.
+
+- The stream FILE structure has been changed, so that the ANSI draft
+  function tmpfile could be implemented.  Therefore, if your
+  programs use stream I/O, you should recompile all the modules that
+  use stream I/O.
+
+
+2. HOW TO GET HELP
+------------------
+
+If you have any problems, please read this file and the Turbo C
+manuals first.  If you still have a question and need assistance,
+help is available from the following sources:
+
+1. Type GO BPROGB on the CompuServe bulletin board system for
+   instant access to the Borland forums with their libraries of
+   technical information and answers to common questions.
+
+   If you are not a member of CompuServe, see the enclosed special
+   offer, and write for full details on how to receive a free
+   IntroPak containing a $15 credit toward your first month's on-
+   line charges.
+
+2. Check with your local software dealer or users' group.
+
+3. Write to us at the following address:
+
+   Borland International
+   Turbo C Technical Support
+   4585 Scotts Valley Drive
+   Scotts Valley, CA  95066
+
+   Please remember to include your serial number or we will be
+   unable to process your letter.
+
+4. If you have an urgent problem that cannot wait and you have sent
+   in the license agreement from the front of your manual, you may
+   call the Borland Technical Support Department at (408) 438-5300.
+   Please have the following information ready before calling:
+
+   a. Product name and serial number on your original distribution
+      disk.  Please have your serial number ready or we will be
+      unable to process your call.
+
+   b. Product version number. The version number for Turbo C is
+      displayed when you first load the program and before you press
+      any keys.
+
+   c. Computer brand, model, and the brands and model numbers of any
+      additional hardware.
+
+   d. Operating system and version number. (The version number can
+      be determined by typing VER at the MSDOS prompt.)
+
+   e. Contents of your AUTOEXEC.BAT file.
+
+   f. Contents of your CONFIG.SYS file.
+
+
+3. CORRECTIONS/ADDITIONS TO THE MANUALS
+---------------------------------------
+
+The following list shows minor corrections to the Turbo C User's
+Guide and Turbo C Reference Guide.  Before going on, check the row
+of numbers at the bottom of the copyright page in your manuals (the
+page after the title page in the front of the manual).  If the
+numbers are 10 9 8 7 6 5 4 3 2 1, refer to the page numbers listed
+here in the first column; if the numbers are 10 9 8 7 6 (and
+possibly 5), refer to the page numbers listed here in the second
+column.
+
+Turbo C User's Guide (Volume I)
+-------------------------------
+
+10  10  The Distribution List is inaccurate.  The correct list of
+        files included with Turbo C is given in this README in
+        Section 10:  Files on the Disks.
+
+267 --- The text says that you need MASM version 3.0 or later to use
+        in-line assembly language.  This should read MASM 4.0 or
+        later.
+
+Turbo C Reference Guide (Volume II)
+-----------------------------------
+
+15  --- The variable int _doserrno is declared in dos.h and errno.h.
+
+29  --- The description for assert says that to disable the assert
+        macro, the symbol NDEBUG must be defined before the assert
+        macro is used.  In fact it must be placed before assert.h is
+        included:
+
+           #define NDEBUG
+
+           #include <assert.h>
+
+
+54  --- The discussion of text mode I/O in the functions close and
+188 --- read (p. 188, ---) states that Ctrl-Z is written to the end
+        of a text mode file when that file is closed, if that file
+        was opened for write.  That is incorrect.  No Ctrl-Z is
+        written for you.  If you want your text file to be terminated
+        with a Ctrl-Z, you need to output one explicitly yourself.
+        Some older programs on MS-DOS require a Ctrl-Z at the end of
+        text files.
+
+108 --- The Portability paragraph for the getc function says that
+        the functions described in that section (getc, getchar,
+        fgetc, etc.) are all in Unix.  In fact, all but getch,
+        getche, and ungetch are in Unix; the others are MS-DOS
+        specific.
+
+131 --- The description of the intdos, intdosx, int86 and int86x
+133 --- functions is incomplete.  The union REGS structure used by all
+        four functions has the additional field x.flags.  This field
+        is set to the 8086 flags register after the system call is
+        made.  This is in contrast to the x.cflag field, which
+        simply contains the state of the carry flag.
+
+        Further, for int86x and intdosx, the segregs->es and
+        segregs->ds fields are set to the values of the corresponding
+        segment registers after the system call.
+
+155 164 The memcpy function says that if the source and destination
+        blocks overlap, the overlapping bytes are copied correctly.
+        This has been changed in version 1.5 to comply with the ANSI
+        draft.  The memmove function handles overlapping bytes
+        correctly.
+
+158 167 The description for modf should say: "modf - splits into
+        integer part and fraction."
+
+181 --- The printf chart is incorrect.  The correct chart is:
+
+          prefix  6d      6o      8x      10.2e           10.2f
+          %-+#0 |+555   |01053  |0x22b    |+5.50e+000 |+5.50      |
+           %-+# |+555   |01053  |0x22b    |+5.50e+000 |+5.50      |
+           %-+0 |+555   |1053   |22b      |+5.50e+000 |+5.50      |
+            %-+ |+555   |1053   |22b      |+5.50e+000 |+5.50      |
+           %-#0 |555    |01053  |0x22b    |5.50e+000  |5.50       |
+            %-# |555    |01053  |0x22b    |5.50e+000  |5.50       |
+            %-0 |555    |1053   |22b      |5.50e+000  |5.50       |
+             %- |555    |1053   |22b      |5.50e+000  |5.50       |
+           %+#0 |+00555 |001053 |0x00022b |+5.50e+000 |+000005.50 |
+            %+# |  +555 | 01053 |   0x22b |+5.50e+000 |     +5.50 |
+            %+0 |+00555 |001053 |0000022b |+5.50e+000 |+000005.50 |
+             %+ |  +555 |  1053 |     22b |+5.50e+000 |     +5.50 |
+            %#0 |000555 |001053 |0x00022b |05.50e+000 |0000005.50 |
+             %# |   555 | 01053 |   0x22b | 5.50e+000 |      5.50 |
+             %0 |000555 |001053 |0000022b |05.50e+000 |0000005.50 |
+              % |   555 |  1053 |     22b | 5.50e+000 |      5.50 |
+
+211 221 The size parameter of setvbuf is limited to a maximum of
+        32767, even though it is declared as an unsigned int.
+
+292 --- The Merge string option (O/C/Code generation/Merge duplicate
+        strings or -d) is actually default OFF, not default ON.
+
+295 306 The warning 'Constant out of range in comparison' is -wrng,
+        not -wdgn.
+
+Turbo C Additions and Enhancements
+----------------------------------
+
+- Page 8: The last sentence of the first paragraph is misleading in
+  regard to how text wraps in windows.  It should read: 'Text wraps
+  within the window as follows:  If text extends beyond the window's
+  right border, the text beyond the right border is moved down to
+  the beginning of the next line.'
+
+- Pages 13 and 135: The table of text_modes type constants shows the
+  symbolic constant LAST.  It should be LASTMODE.
+
+- Page 17: Add the IBM8514 Graphics Adapter to the list of drivers.
+
+- Page 28: The sentence after the table reads 'A call to
+  grapherrormsg(graphresult) ...' It should read 'A call to
+  grapherrormsg(graphresult()) ...'
+
+- Page 57: The calls to pieslice in the example program should
+  be as follows:
+
+      pieslice(100, 100, 0, 135, 49);
+      pieslice(100, 100, 135, 225, 49);
+      pieslice(100, 100, 225, 360, 49);
+
+- Page 65: An additional note to the country function:  it is only
+  available with MS-DOS version 3.0 and greater.
+
+- Page 74: On an EGA or VGA, the parameter to setbkcolor indicates
+  the entry number in the current palette rather than a specific
+  color (except if 0 is given as a parameter, which will set the
+  background color to black).
+
+- Page 84: Change the line in the example program that reads
+  'saveline.pattern,' to 'saveline.upattern,.'
+
+- Page 90: Change the calls to gettext and puttext in the example
+  program to read:
+
+      gettext(1, 1, 20, 10, buf);
+      puttext(1, 1, buf);
+
+- Page 98: In the Huge model, the prototype for grapherrormsg is as
+  described.  For all the other models, the prototype is as follows:
+
+      char * far grapherrormsg(int errorcode);
+
+- Page 106: Remove the reference to initgraph in the 'See also'
+  section.
+
+- Page 122: The Description of setcolor should say "see setbkcolor."
+
+- Page 133: If a string is printed with the default font using
+  outtext or outtextxy, the string may not be printed if it extends
+  outside the current viewport.
+
+- Page 142: The header file for searchpath is DIR.H, not DIR.M. The
+  header file for setblock is DOS.H, not DOS.M.
+
+- Pages 142, 143, and 144: The correct prototypes for sscanf,
+  strnset and vsscanf are as follows:
+
+  int  sscanf(const char *string, const char *format [,argument,...]);
+  char *strnset(char *s, int ch, size_t n);
+  int vsscanf(const char *string, const char *format, va_list param);
+
+- Page 171: Additional note to the listfile parameter: the default
+  extension for the listfile is .LST.
+
+- Page 177: In the GREP example, the string setupmymodem should be
+  setupmodem.
+
+- Page 187: The table of driver files should contain one more entry:
+
+               IBM8514      IBM8514_driver
+
+
+4. SETTING UP TURBO C ON A FLOPPY DISK SYSTEM
+---------------------------------------------
+
+Since TC.EXE and TCHELP.TCH no longer fit on the same disk, the
+instructions in the User's Guide for setting up Turbo C on a floppy
+disk system need to be modified:
+
+Instead of putting TC.EXE and TCHELP.TCH on the same disk, put them
+on separate disks.  Follow the setup instructions in the manual,
+treating the disk with TC.EXE as the program disk before TC has been
+loaded, and treating the disk with TCHELP.TCH as the program disk
+after TC has been loaded.
+
+
+5. INTERFACING TURBO C AND TURBO PASCAL 4.0
+-------------------------------------------
+
+There is a program on the disks that demonstrates how to use Turbo C
+modules in a Turbo Pascal 4.0 program.  Look at CPASDEMO.PAS for
+information on how to do this.
+
+
+6. INTERFACING TURBO C AND TURBO PROLOG
+---------------------------------------
+
+There has been a change in the Turbo C/Turbo Prolog interface module
+CPINIT.OBJ described in Chapter 7 of the User's Guide.  The
+interface is now spread between CPINIT.OBJ and CPINIT.LIB.
+CPINIT.LIB contains palloc, malloc_heap, _malloc, and _free.  By
+using CPINIT.LIB you can use Turbo C functions that used _malloc and
+_free from the Turbo C Runtime Library (including _calloc, _strdup,
+_scanf) when writing C language predicates.  The tlink command line
+should have the following form:
+
+  tlink init cpinit <prolog objects> <c objects> <prolog.sym>,
+  <exename>,,cpinit+prolog[+emu+mathl]+cl
+
+  (This should be a single command line.)
+
+
+The examples in the User's Guide will work as written, but you will
+need to use the CPINIT.LIB file when linking.
+
+You must still stay away from farmalloc, farcalloc, realloc,
+farrealloc, brk, sbrk, coreleft, and farcoreleft.
+
+The prototypes for palloc, malloc_heap, and release_heap should have
+type unsigned for the parameter size.
+
+BAR.C is now called CBAR.C so that it does not interfere with function
+names in later versions of Turbo Prolog.
+
+
+7. USING TURBO C WITH MSDOS 3.2 AND A FLOATING POINT COPROCESSOR
+----------------------------------------------------------------
+
+MS-DOS 3.2 has a bug in its handling of floating exceptions.  When
+an exception occurs, the system allocates a local stack for the
+exception handler.  Unfortunately, once a system stack is
+allocated, it never gets deallocated.  The default number of stacks
+is 8.  After 9 floating point exceptions occur, the system hangs and
+a cold reboot is required.  Typical exceptions are overflow and
+divide by zero.  The stacks are not reclaimed when a program
+terminates, so a program which divides by zero once will crash the
+machine if run 9 times.  To avoid this problem, you can:
+
+1. Not use MS-DOS 3.2.
+2. Obtain a patch from IBM or Microsoft which fixes the
+   bug, and install it on your copy of MS-DOS.
+3. Not use a floating point coprocessor.
+4. Disable the exception trapping in your Turbo C program. You can
+   do this easily by calling the _control87 library function.  For
+   example:
+
+   #include <float.h>
+   unsigned int fpstatus;
+   /* stdlib.h included for exit, stdio.h for puts */
+   #include <stdlib.h>
+   #include <stdio.h>
+
+   main()
+   {
+       _control87(MCW_EM, MCW_EM);
+       /* do floating point work here */
+       /*  ...  */
+       /* now, check for masked exceptions before exiting */
+       fpstatus = _status87();
+       if (fpstatus & SW_INVALID)
+       puts("Floating point error: invalid operation.");
+       if (fpstatus & SW_ZERODIVIDE)
+           puts("Floating point error: zero divide.");
+       if (fpstatus & SW_OVERFLOW)
+           puts("Floating point error: overflow.");
+       exit(fpstatus & (SW_INVALID | SW_ZERODIVIDE | SW_OVERFLOW));
+   }
+
+
+8. HOW TO COMPILE MICROCALC
+---------------------------
+
+In order to compile MicroCalc do the following:
+
+  With TC.EXE:
+
+    1.  Run TC.EXE
+    2.  In the Project pulldown menu specify the project name
+        "MCALC.PRJ"
+    3.  From the main menu select the Run option
+
+  With TCC.EXE:
+
+     Compile from MS-DOS with the following command line:
+
+        TCC mcalc mcparser mcdisply mcinput mcommand mcutil
+
+In both cases, compiling under a large data model (COMPACT, LARGE,
+or HUGE) will give you considerably more memory for your
+spreadsheets.
+
+
+9. MISCELLANEOUS INFORMATION
+----------------------------
+
+- memcpy():  The memcpy function does NOT handle overlap.  This
+  change was made to follow the ANSI draft.  The memmove function
+  does handle overlap.
+
+- main():  If you turn on the "function must return a value" warning, 
+  main() may generate this warning.  To avoid this warning for
+  main(), make sure that main() returns a value using the return
+  statement, or declare main() as "void main()."
+
+- Disable register variables:  Here is further explanation of the
+  switch to disable register variables (-r- or O/C/Optimization/ Use
+  register variables..Off).  Not only will the compiler not use
+  register variables, but it also will not respect and preserve
+  register variables (si,di) from any caller.  For that reason, you
+  should not have code that uses register variables call code which
+  has been compiled -r-.
+
+- Arguments to main: The C startup routine (C0?.OBJ) parses the
+  command line to set up the argc, argv arguments to main.  Double
+  quotes on the command line can be used to bracket a single
+  argument that has embedded blanks.  For example, in the following,
+  the program MYPROG.EXE is invoked with three arguments:
+
+    myprog arg1 "arg2 with embedded blanks" arg3
+
+  The second argument contains embedded blanks.
+
+
+10. FILES ON THE DISKS
+----------------------
+
+DISK 1:  INTEGRATED DEVELOPMENT ENVIRONMENT
+-------------------------------------------
+
+README   COM - Reads this README
+TC       EXE - Turbo C Compiler
+INSTALL  BAT - Hard disk installation batch file
+INSTALLH BAT - Hard disk installation batch file called by
+               INSTALL.BAT
+TCINST   EXE - Installation program for TC.EXE
+
+GRAPHICS DOC - Additional documentation on BGI graphics
+
+HELLO    C   - Example Turbo C program
+
+CPASDEMO PAS - Pascal program that demonstrates Turbo Pascal 4.0 -
+               Turbo C interface
+CPASDEMO C   - C example module for the Turbo Pascal 4.0 - Turbo C
+               interface demonstration
+CTOPAS   TC  - Configuration file for use with TC.EXE that
+               creates Turbo C modules in the correct format
+               for linking with Turbo Pascal 4.0 programs
+
+CBAR     C   - Example function to be used with PBAR.PRO
+PBAR     PRO - Example Turbo Prolog program demonstrating interface
+               with Turbo C
+
+README       - This file!
+
+
+DISK 2:  COMMAND LINE/UTILITIES
+-------------------------------
+
+TCC      EXE - Command line version of Turbo C Compiler
+TLINK    EXE - Borland Turbo Linker
+BGIOBJ   EXE - Conversion program for fonts and drivers
+CPP      EXE - Turbo C preprocessor
+MAKE     EXE - Program for managing projects
+TCCONFIG EXE - Program to convert configuration files
+TLIB     EXE - Borland Turbo Librarian
+RULES    ASI - Assembler include file for interfacing with Turbo C
+C0       ASM - Assembler source for startup code
+SETARGV  ASM - Assembler source code for parsing the command line
+SETENVP  ASM - Assembler source code for preparing the environment
+BUILD-C0 BAT - Batch file for building the startup code modules
+MAIN     C   - Alternative, stripped-down C main file
+GREP     COM - Turbo GREP program
+TOUCH    COM - Program that updates a file's date and time
+
+
+DISK 3:  HEADER FILES/LIBRARIES
+-------------------------------
+
+???????? H   - Turbo C header files
+
+C0T      OBJ - Tiny model startup code
+C0S      OBJ - Small model startup code
+CS       LIB - Small model run-time library
+MATHS    LIB - Small model math library
+C0L      OBJ - Large model startup code
+CL       LIB - Large model run-time library
+MATHL    LIB - Large model math library
+EMU      LIB - 8087 emulator library
+GRAPHICS LIB - Graphics library
+FP87     LIB - 8087 library
+
+SYS DIRECTORY
+-------------
+STAT     H   - Turbo C header file with file status/directory
+               functions
+
+
+DISK 4:  LIBRARIES
+------------------
+
+C0C      OBJ - Compact model startup code
+CC       LIB - Compact model run-time library
+MATHC    LIB - Compact model math library
+C0M      OBJ - Medium model startup code
+CM       LIB - Medium model run-time library
+MATHM    LIB - Medium model math library
+C0H      OBJ - Huge model startup code
+CH       LIB - Huge model run-time library
+MATHH    LIB - Huge model math library
+
+
+DISK 5:  EXAMPLES
+-----------------
+
+TCHELP   TCH - Help file for Turbo C
+
+MCALC    C   - MicroCalc main program source code
+MCINPUT  C   - MicroCalc input routines source code
+MCOMMAND C   - MicroCalc commands source code
+MCPARSER C   - MicroCalc input parser source code
+MCUTIL   C   - MicroCalc utilities source code
+MCDISPLY C   - MicroCalc screen display source code
+MCALC    H   - The header file for MicroCalc
+MCALC    PRJ - The MicroCalc project file
+
+BGIDEMO  C   - Graphics demonstration program
+BGIDEMO  PRJ - Graphics demo project file
+
+MATHERR  C   - Source code for handling math library exceptions
+GETOPT   C   - Parses options in command line
+
+CPINIT   OBJ - Initialization code to be used when linking
+               Turbo C and Turbo Prolog.
+CPINIT   LIB - Library to be used when linking Turbo C and Turbo
+               Prolog. See Section 6 above.
+
+ATT      BGI - Graphics driver for ATT400 graphics card
+CGA      BGI - Graphics driver for CGA
+EGAVGA   BGI - Graphics driver for EGA and VGA
+HERC     BGI - Graphics driver for Hercules
+IBM8514  BGI - Graphics driver for IBM 8514 graphics card
+PC3270   BGI - Graphics driver for PC3270
+
+GOTH     CHR - Font for gothic character set
+LITT     CHR - Font for small character set
+SANS     CHR - Font for sansserif character set
+TRIP     CHR - Font for triplex character set
+
+MCALC    DOC - Additional MicroCalc documentation
+
