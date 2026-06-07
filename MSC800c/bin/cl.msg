@@ -33,8 +33,8 @@ C COMPILER OPTIONS
 /Ox maximum opts. (/Ob1cegilnot /Gs)
 /Oz enable "unsafe" optimizations
 -CODE GENERATION-
-/G0 8086 instructions (default)
-/G1  186 instructions
+/G0 8086 instructions
+/G1  186 instructions (default)
 /G2  286 instructions
 /G3  386 instructions
 /GA protected-mode Win entry/exit code
