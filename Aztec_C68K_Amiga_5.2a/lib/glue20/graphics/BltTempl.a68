@@ -1,0 +1,13 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_BltTemplate
+_BltTemplate:
+	movem.l	a6/d2/d3/d4/d5,-(sp)
+	move.l	_GfxBase,a6
+	move.l	24(sp),a0
+	movem.l	28(sp),d0/d1/a1
+	movem.l	40(sp),d2/d3/d4/d5
+	jsr	-36(a6)
+	movem.l	(sp)+,a6/d2/d3/d4/d5
+	rts

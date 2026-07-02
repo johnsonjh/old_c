@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_WaitTOF
+_WaitTOF:
+	move.l	a6,-(sp)
+	move.l	_GfxBase,a6
+	jsr	-270(a6)
+	move.l	(sp)+,a6
+	rts

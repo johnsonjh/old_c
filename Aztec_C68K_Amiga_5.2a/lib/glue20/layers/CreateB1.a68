@@ -1,0 +1,13 @@
+;:ts=8
+
+	xref	_LayersBase
+	xdef	_CreateBehindHookLayer
+_CreateBehindHookLayer:
+	movem.l	a6/d2/d3/d4/a3/a2,-(sp)
+	move.l	_LayersBase,a6
+	movem.l	28(sp),a0/a1
+	movem.l	36(sp),d0/d1/d2/d3/d4/a3
+	move.l	60(sp),a2
+	jsr	-192(a6)
+	movem.l	(sp)+,a6/d2/d3/d4/a3/a2
+	rts

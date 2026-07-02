@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_IFFParseBase
+	xdef	_AllocLocalItem
+_AllocLocalItem:
+	movem.l	a6/d2/d3,-(sp)
+	move.l	_IFFParseBase,a6
+	movem.l	16(sp),d0/d1/d2/d3
+	jsr	-186(a6)
+	movem.l	(sp)+,a6/d2/d3
+	rts

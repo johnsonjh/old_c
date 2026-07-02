@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_DoCollision
+_DoCollision:
+	move.l	a6,-(sp)
+	move.l	_GfxBase,a6
+	move.l	8(sp),a1
+	jsr	-108(a6)
+	move.l	(sp)+,a6
+	rts

@@ -1,0 +1,12 @@
+;:ts=8
+
+; jd 8/28/91 new
+	xref	_UtilityBase
+	xdef	_Strnicmp
+_Strnicmp:
+	move.l	a6,-(sp)
+	move.l	_UtilityBase,a6
+	move.l	8(sp),a0-a1
+	jsr	-168(a6)		;Strnicmp
+	move.l	(sp)+,a6
+	rts

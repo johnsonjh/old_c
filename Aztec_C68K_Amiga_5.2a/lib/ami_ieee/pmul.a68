@@ -1,0 +1,8 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	.Pmul
+.Pmul:
+	move.l	#_LVOIEEEDPMul#,-(sp)
+	jmp	amiga_ieee#
+

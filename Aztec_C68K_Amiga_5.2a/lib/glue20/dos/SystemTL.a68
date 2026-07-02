@@ -1,0 +1,15 @@
+;:ts=8
+; jd 8/28/91
+; SystemTags is in amiga.lib, not dos.library
+
+	xref	_DOSBase
+	xdef	_SystemTags
+_SystemTags:
+	movem.l	a6/d2,-(sp)
+	move.l	_DOSBase,a6
+	pea	16(sp)
+	move.l	(sp)+,d2
+	movem.l	12(sp),d1
+	jsr	-606(a6)		;System
+	movem.l	(sp)+,a6/d2
+	rts

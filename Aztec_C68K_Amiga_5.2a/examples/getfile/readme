@@ -1,0 +1,29 @@
+ReadMe for GetFile.Arc			November 11, 1986
+
+	This archive includes the files needed for the Heath/Aegis file name
+requester.
+	This material is copyright (c) 1986 by C. Heath of Microsmiths, Inc.
+Permission is granted to use these files in any way with the following
+exceptions:
+
+1) The files shall not be posted on any telecommunications service, public
+or private, except for BIX until January 15, 1987.
+
+2) The files may only be distributed in archive format, with no modifications.
+If you make any improvements on the file requester and would like to
+generally distribute them, please contact "cheath" on BIX, or write to:
+	Microsmiths Inc, PO Box 561, Cambridge, MA 02140
+
+3) The requester may be used in any commercial product, but must be in
+object code format.  Permission is granted to Lattice, Inc, and to
+Manx, Inc, to include the source files in archive format.
+
+4) These files are distributed "as is" and it is your sole responsibility
+to determine their fitness for use.
+
+	My apologies for the lousy program structure and the compile
+time warnings - I didn't have time to clean things up.  Hope this doesn't
+inconvenience too many folks.
+
+	Thanks, and enjoy.
+		...cheath

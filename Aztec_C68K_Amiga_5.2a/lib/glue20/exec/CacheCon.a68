@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_CacheControl
+_CacheControl:
+	move.l	a6,-(sp)
+	move.l	_SysBase,a6
+	movem.l	8(sp),d0/d1
+	jsr	-648(a6)
+	move.l	(sp)+,a6
+	rts

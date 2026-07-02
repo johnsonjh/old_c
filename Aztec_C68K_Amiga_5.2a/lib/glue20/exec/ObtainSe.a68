@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_ObtainSemaphore
+_ObtainSemaphore:
+	move.l	a6,-(sp)
+	move.l	_SysBase,a6
+	move.l	8(sp),a0
+	jsr	-564(a6)
+	move.l	(sp)+,a6
+	rts

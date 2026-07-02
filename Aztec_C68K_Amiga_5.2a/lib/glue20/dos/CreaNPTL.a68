@@ -1,0 +1,14 @@
+;:ts=8
+; jd 8/28/91
+; CreateNewProcTags is in amiga.lib, not dos.library
+
+	xref	_DOSBase
+	xdef	_CreateNewProcTags
+_CreateNewProcTags:
+	move.l	a6,-(sp)
+	move.l	_DOSBase,a6
+	pea	8(sp)
+	move.l	(sp)+,d1
+	jsr	-498(a6)		;CreateNewProc
+	move.l	(sp)+,a6
+	rts

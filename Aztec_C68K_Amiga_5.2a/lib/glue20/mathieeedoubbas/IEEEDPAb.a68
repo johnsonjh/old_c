@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_MathIeeeDoubBasBase
+	xdef	_IEEEDPAbs
+_IEEEDPAbs:
+	move.l	a6,-(sp)
+	move.l	_MathIeeeDoubBasBase,a6
+	movem.l	8(sp),d0/d1
+	jsr	-54(a6)
+	move.l	(sp)+,a6
+	rts

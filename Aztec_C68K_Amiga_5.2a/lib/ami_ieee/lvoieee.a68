@@ -1,0 +1,28 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOIEEEDPCeil	equ	-96
+_LVOIEEEDPFloor	equ	-90
+_LVOIEEEDPDiv	equ	-84
+_LVOIEEEDPMul	equ	-78
+_LVOIEEEDPSub	equ	-72
+_LVOIEEEDPAdd	equ	-66
+_LVOIEEEDPNeg	equ	-60
+_LVOIEEEDPAbs	equ	-54
+_LVOIEEEDPTst	equ	-48
+_LVOIEEEDPCmp	equ	-42
+_LVOIEEEDPFlt	equ	-36
+_LVOIEEEDPFix	equ	-30
+
+	public	_LVOIEEEDPCeil
+	public	_LVOIEEEDPFloor
+	public	_LVOIEEEDPDiv
+	public	_LVOIEEEDPMul
+	public	_LVOIEEEDPSub
+	public	_LVOIEEEDPAdd
+	public	_LVOIEEEDPNeg
+	public	_LVOIEEEDPAbs
+	public	_LVOIEEEDPTst
+	public	_LVOIEEEDPCmp
+	public	_LVOIEEEDPFlt
+	public	_LVOIEEEDPFix

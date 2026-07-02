@@ -1,0 +1,6 @@
+#pragma amicall(DiskBase, 0x6, AllocUnit(d0))
+#pragma amicall(DiskBase, 0xc, FreeUnit(d0))
+#pragma amicall(DiskBase, 0x12, GetUnit(a1))
+#pragma amicall(DiskBase, 0x18, GiveUnit())
+#pragma amicall(DiskBase, 0x1e, GetUnitID(d0))
+#pragma amicall(DiskBase, 0x24, ReadUnitID(d0))

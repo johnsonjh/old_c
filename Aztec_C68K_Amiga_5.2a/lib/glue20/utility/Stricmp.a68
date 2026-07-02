@@ -1,0 +1,12 @@
+;:ts=8
+
+; jd 8/28/91 new
+	xref	_UtilityBase
+	xdef	_Stricmp
+_Stricmp:
+	move.l	a6,-(sp)
+	move.l	_UtilityBase,a6
+	move.l	8(sp),a0-a1
+	jsr	-162(a6)		;Stricmp
+	move.l	(sp)+,a6
+	rts

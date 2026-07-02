@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_OpenLibrary
+_OpenLibrary:
+	move.l	a6,-(sp)
+	move.l	_SysBase,a6
+	move.l	8(sp),a1
+	move.l	12(sp),d0
+	jsr	-552(a6)
+	move.l	(sp)+,a6
+	rts

@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_CxBase
+	xdef	_SetTranslate
+_SetTranslate:
+	move.l	a6,-(sp)
+	move.l	_CxBase,a6
+	movem.l	8(sp),a0/a1
+	jsr	-114(a6)
+	move.l	(sp)+,a6
+	rts

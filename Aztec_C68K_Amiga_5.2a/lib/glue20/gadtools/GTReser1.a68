@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_GadToolsBase
+	xdef	_GTReserved1
+_GTReserved1:
+	move.l	a6,-(sp)
+	move.l	_GadToolsBase,a6
+	jsr	-144(a6)
+	move.l	(sp)+,a6
+	rts

@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_UtilityBase
+	xdef	_CloneTagItems
+_CloneTagItems:
+	move.l	a6,-(sp)
+	move.l	_UtilityBase,a6
+	move.l	8(sp),a0
+	jsr	-72(a6)
+	move.l	(sp)+,a6
+	rts

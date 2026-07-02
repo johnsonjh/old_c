@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_InitStruct
+_InitStruct:
+	movem.l	a6/a2,-(sp)
+	move.l	_SysBase,a6
+	movem.l	12(sp),a1/a2
+	move.l	20(sp),d0
+	jsr	-78(a6)
+	movem.l	(sp)+,a6/a2
+	rts

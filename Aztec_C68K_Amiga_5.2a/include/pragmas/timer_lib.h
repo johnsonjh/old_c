@@ -1,0 +1,5 @@
+#pragma amicall(TimerBase, 0x2a, AddTime(a0,a1))
+#pragma amicall(TimerBase, 0x30, SubTime(a0,a1))
+#pragma amicall(TimerBase, 0x36, CmpTime(a0,a1))
+#pragma amicall(TimerBase, 0x3c, ReadEClock(a0))
+#pragma amicall(TimerBase, 0x42, GetSysTime(a0))

@@ -1,0 +1,12 @@
+;:ts=8
+
+; jd 8/29/91 new
+	xref	_IconBase
+	xdef	_DeleteDiskObject
+_DeleteDiskObject:
+	movem.l	a6,-(sp)
+	move.l	_IconBase,a6
+	movem.l	8(sp),a0
+	jsr	-138(a6)
+	movem.l	(sp)+,a6
+	rts

@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_ExpansionBase
+	xdef	_FreeBoardMem
+_FreeBoardMem:
+	move.l	a6,-(sp)
+	move.l	_ExpansionBase,a6
+	movem.l	8(sp),d0/d1
+	jsr	-78(a6)
+	move.l	(sp)+,a6
+	rts

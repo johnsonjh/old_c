@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_DrawImageState
+_DrawImageState:
+	movem.l	a6/d2/a2,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	16(sp),a0/a1
+	movem.l	24(sp),d0/d1/d2/a2
+	jsr	-618(a6)
+	movem.l	(sp)+,a6/d2/a2
+	rts

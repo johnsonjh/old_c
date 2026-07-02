@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_SetPubScreenModes
+_SetPubScreenModes:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	move.l	8(sp),d0
+	jsr	-546(a6)
+	move.l	(sp)+,a6
+	rts

@@ -1,0 +1,17 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	amiga_math
+	public	_LVOSPSincos
+	public	_sincos
+_sincos
+	move.l	(sp)+,4(sp)
+	jsr	sub
+	move.l	8(sp),a0
+	move.l	d1,(a0)
+	move.l	4(sp),a0
+	jmp	(a0)
+sub
+	move.w	#_LVOSPSincos,-(sp)
+	jmp	amiga_math
+

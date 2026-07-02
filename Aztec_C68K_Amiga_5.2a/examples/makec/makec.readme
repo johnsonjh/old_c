@@ -1,0 +1,80 @@
+MakeC
+
+	This is a program I wrote because I had an IFF picture I wanted to 
+use as an image in one of my programs.  I tried a couple of PD iff-to-c
+converters, but none of them worked right (gave me garbage).  On top of 
+that, all of them expected me to type in x,y coordinates of the area I 
+wanted to clip.  Type in coordinates on an Amiga?  What for?
+	So anyway, this program is the result of these problems.  It will 
+load any IFF picture, even HAM and overscan, and allow you to clip out a 
+box to save as C source code.  The image can be written as either image 
+structure or bitmap structure by clicking the appropriate gadget at save 
+time.
+	It only works from the CLI, because most of the time when you're doing 
+C programming, you're probably using the CLI anyway.
+	This version allows you to scroll around in super-bitmaps by holding 
+down the right mouse button and scrolling.  The pointer will change to 
+indicate the fact that scrolling is active.  Also note that overscan 
+pictures are not displayed in overscan, but in a normal screen, so you 
+can't see the overscan area.  (I'm one of these weird types who wants my 
+programs to continue to run under WorkBench 2.0 without changing a lot of 
+stuff around.)
+	So anyway, here it is.  Works like a charm on all the pictures I have 
+tested it with. 
+	 While the picture is displayed,  just draw boxes around the areas to 
+save with the left mouse button, and you will get the save/cancel/quit 
+window automatically.  When that window appears, you select the desired
+ouput format by clicking on the Image or BitMap gadgets. You can save it 
+by clicking on the save gadget, while clicking the cancel gadget will 
+return you to the picture for clipping another area.  Clicking the quit 
+button will end the program.
+	Also, while the picture window is active, the following keys are 
+available for use:
+	
+	'b'		sends the screen to the back
+	'f'		brings the screen to the front
+	'h'		home the picture (scroll back to top left corner)
+	'q'		bring up the save/cancel/quit window
+	
+	This program could obviously double as an IFF viewer.  It includes my 
+own IFF reading routines, which are greatly over-simplified and will 
+probably only work right with FORM ILBM pictures (no LISTs or CATs).  Also
+not that overscan HAM pictures may appear brain-damaged when displayed an 
+a normal (non-overscan) way.  However, the image is still correct and the 
+source code generated will still work.  It's just due to the way HAM 
+handles color generation.
+
+IFFInfo
+
+	This is a quick little utility written as an aid for MakeC.  It reads 
+an IFF picture and tells you what the BitMapHeader says about it -- size,
+number of colors, page size, masking and compression, that sort of 
+thing.  Pretty handy for figuring out why that 320 X 1500 picture won't 
+load into Photon Paint or whatever...	
+	
+	Note that I do not request any donation for the use of this program, 
+however should you feel you need to send something, please feel free to 
+do so.  
+	This source code is explicitly NOT public domain.  However, it may be 
+distributed by any means you so desire as long as all these files remain 
+included and no charge is made for such distribution (other than 
+reasonable media charges).  The source code may not be included in any 
+COMMERCIAL product without my consent.  However, PD and shareware authors 
+may feel free to include my routines in their own programs, although I 
+would appreciate brief mention if they do so (this is my way of saying 
+thanks to those PD authors whose work has helped me out).
+	This program was developed using Lattice C v5.05.  It may or may not 
+require modification to compile under other environments.  The code is 
+pretty heavily commented to make it easy to do so if necessary.
+
+
+	Comments, flames, large denomination US currency and hard drives of 
+outrageous capacity may be sent to me at the following address:
+	
+	Robert Kesterson
+	6418 30th Street
+	Lubbock, TX 79407
+	(806)-792-3639 (voice)
+	BIX: rkesterson
+	
+	

@@ -1,0 +1,21 @@
+;:ts=8
+; Copyright (C) 1986,1987 by Manx Software Systems, Inc.
+;
+
+	far	code
+
+	public	_geta4
+
+	public	_int_start
+_int_start
+	move.l	(sp)+,a0
+	move.l	a4,-(sp)
+	move.l	a0,-(sp)
+	jmp	_geta4
+
+	public	_int_end
+_int_end
+	move.l	(sp)+,a0
+	move.l	(sp)+,a4
+	jmp	(a0)
+

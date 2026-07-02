@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_CxBase
+	xdef	_DivertCxMsg
+_DivertCxMsg:
+	movem.l	a6/a2,-(sp)
+	move.l	_CxBase,a6
+	movem.l	12(sp),a0/a1/a2
+	jsr	-156(a6)
+	movem.l	(sp)+,a6/a2
+	rts

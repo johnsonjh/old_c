@@ -1,0 +1,92 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_MathBase
+
+	public	_LVOSPFix
+	public	_SPFix
+_SPFix
+	move.l	4(sp),d0
+	move.l	_MathBase,a6
+	jmp	_LVOSPFix(a6)
+
+	public	_LVOSPFlt
+	public	_SPFlt
+_SPFlt
+	move.l	4(sp),d0
+	move.l	_MathBase,a6
+	jmp	_LVOSPFlt(a6)
+
+	public	_LVOSPCmp
+	public	_SPCmp
+_SPCmp
+	movem.l	4(sp),d0/d1
+	exg	d0,d1
+	move.l	_MathBase,a6
+	jmp	_LVOSPCmp(a6)
+
+	public	_LVOSPTst
+	public	_SPTst
+_SPTst
+	move.l	4(sp),d1
+	move.l	_MathBase,a6
+	jmp	_LVOSPTst(a6)
+
+	public	_LVOSPAbs
+	public	_SPAbs
+_SPAbs
+	move.l	4(sp),d0
+	move.l	_MathBase,a6
+	jmp	_LVOSPAbs(a6)
+
+	public	_LVOSPNeg
+	public	_SPNeg
+_SPNeg
+	move.l	4(sp),d0
+	move.l	_MathBase,a6
+	jmp	_LVOSPNeg(a6)
+
+	public	_LVOSPAdd
+	public	_SPAdd
+_SPAdd
+	movem.l	4(sp),d0/d1
+	move.l	_MathBase,a6
+	jmp	_LVOSPAdd(a6)
+
+	public	_LVOSPSub
+	public	_SPSub
+_SPSub
+	movem.l	4(sp),d0/d1
+	exg	d0,d1
+	move.l	_MathBase,a6
+	jmp	_LVOSPSub(a6)
+
+	public	_LVOSPMul
+	public	_SPMul
+_SPMul
+	movem.l	4(sp),d0/d1
+	move.l	_MathBase,a6
+	jmp	_LVOSPMul(a6)
+
+	public	_LVOSPDiv
+	public	_SPDiv
+_SPDiv
+	movem.l	4(sp),d0/d1
+	exg	d0,d1
+	move.l	_MathBase,a6
+	jmp	_LVOSPDiv(a6)
+
+	public	_LVOSPCeil
+	public	_SPCeil
+_SPCeil
+	move.l	4(sp),d0
+	move.l	_MathBase,a6
+	jmp	_LVOSPCeil(a6)
+
+	public	_LVOSPFloor
+	public	_SPFloor
+_SPFloor
+	move.l	4(sp),d0
+	move.l	_MathBase,a6
+	jmp	_LVOSPFloor(a6)
+

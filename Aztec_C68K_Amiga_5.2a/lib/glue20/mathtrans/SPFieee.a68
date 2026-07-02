@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_MathTransBase
+	xdef	_SPFieee
+_SPFieee:
+	move.l	a6,-(sp)
+	move.l	_MathTransBase,a6
+	move.l	8(sp),d0
+	jsr	-108(a6)
+	move.l	(sp)+,a6
+	rts

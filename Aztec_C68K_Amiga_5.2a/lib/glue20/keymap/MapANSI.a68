@@ -1,0 +1,13 @@
+;:ts=8
+
+	xref	_KeymapBase
+	xdef	_MapANSI
+_MapANSI:
+	movem.l	a6/a2,-(sp)
+	move.l	_KeymapBase,a6
+	move.l	12(sp),a0
+	movem.l	16(sp),d0/a1
+	movem.l	24(sp),d1/a2
+	jsr	-48(a6)
+	movem.l	(sp)+,a6/a2
+	rts

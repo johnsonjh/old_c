@@ -1,0 +1,28 @@
+; :ts=8
+;
+; Convert unsigned long to double
+; jd 4/3/91 SCR 18
+;
+	public	.Pflu
+.Pflu:
+	tst.l	d0
+	bmi	isneg
+	jmp	.Pflt
+isneg:
+	and.l	#$7fffffff,d0	;float all but high bit
+	jsr	.Pflt
+	movem.l	d2/d3,-(sp)
+	move.l	#$41e00000,d2	; 0x80000000 in float form
+	move.l	#0,d3
+	jsr	.Padd#		; add the two parts
+	movem.l	(sp)+,d2/d3
+	rts
+;
+; Convert signed long to double
+;
+
+	public	.Pflt
+.Pflt:
+	move.l	#_LVOIEEEDPFlt#,-(sp)
+	jmp	amiga_ieee#
+

@@ -1,0 +1,6 @@
+#pragma amicall(AslBase, 0x1e, AllocFileRequest())
+#pragma amicall(AslBase, 0x24, FreeFileRequest(a0))
+#pragma amicall(AslBase, 0x2a, RequestFile(a0))
+#pragma amicall(AslBase, 0x30, AllocAslRequest(d0,a0))
+#pragma amicall(AslBase, 0x36, FreeAslRequest(a0))
+#pragma amicall(AslBase, 0x3c, AslRequest(a0,a1))

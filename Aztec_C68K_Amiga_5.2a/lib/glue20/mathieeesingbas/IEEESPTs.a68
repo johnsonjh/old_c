@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_MathIeeeSingBasBase
+	xdef	_IEEESPTst
+_IEEESPTst:
+	move.l	a6,-(sp)
+	move.l	_MathIeeeSingBasBase,a6
+	move.l	8(sp),d0
+	jsr	-48(a6)
+	move.l	(sp)+,a6
+	rts

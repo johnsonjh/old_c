@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_GadToolsBase
+	xdef	_GT_SetGadgetAttrsA
+_GT_SetGadgetAttrsA:
+	movem.l	a6/a2/a3,-(sp)
+	move.l	_GadToolsBase,a6
+	movem.l	16(sp),a0/a1/a2/a3
+	jsr	-42(a6)
+	movem.l	(sp)+,a6/a2/a3
+	rts

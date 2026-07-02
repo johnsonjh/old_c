@@ -1,0 +1,92 @@
+;:ts=8
+; Copyright (C) 1986,1987 by Manx Software Systems, Inc.
+;
+
+_LVOFreeMem	equ	-210
+
+	far	code
+	far	data
+	public	_freeseg
+_freeseg:
+	movem.l	d2/d3/a2/a3/a6,-(sp)
+	move.l	24(sp),a0		;get address of segment Jmptab entry
+	cmp.w	#$4ef9,(a0)		;check if valid entry
+	bne	done			;no, skip
+	move.l	__H0_org#+12,a2		;get address of segment data table
+	lea	__H1_org#,a1		;get address of data segment
+	sub.l	a1,a0			;calculate the segment Jmptab offset
+	move.l	(a2)+,d1		;get number of entries
+	asl.l	#3,d1			;multiply by size of entry
+	move.l	a2,a3			;copy start of table
+	add.l	d1,a3			;point past last entry
+
+1$:
+	sub.l	#8,a3			;back up to next entry
+	cmp.l	a2,a3			;check if at beginning
+	blt	done			;didn't find it
+	tst.l	(a3)			;check file offset
+	beq	1$			;if zero, null entry, skip
+	cmp.w	4(a3),a0		;check against table entry
+	blt	1$			;not in this segment
+
+;------ found it, now do the work.
+
+	move.l	a3,d3			;copy to d1
+	sub.l	a2,d3			;get offset
+	lsr.l	#3,d3			;divide by eight to get offset
+	add.l	#1,d3			;add 1 to get real segment number
+
+	move.l	#__H1_org#,a1		;get data hunk
+	add.w	4(a3),a1		;add in table offset
+	add.w	6(a3),a2		;add hunk data offset
+loop:
+	move.w	(a2)+,d0		;get hunk number
+	beq	done			;all done
+	move.l	__H0_org#+16,a0		;BPTR to Hunk table
+	add.l	a0,a0			;double it
+	add.l	a0,a0			;and again
+	add.l	d0,d0			;double hunk number
+	add.l	d0,d0			;and again
+	move.l	(a0,d0),d1		;get hunk BPTR
+	clr.l	(a0,d0)			;clear it out
+
+2$
+	move.l	(a0),a0			;skip to next
+	add.l	a0,a0			;convert to ptr
+	add.l	a0,a0
+	cmp.l	(a0),d1			;is it the one we want?
+	bne	2$			;no, keep going
+	add.l	d1,d1			;convert to pointer
+	add.l	d1,d1
+
+	movem.l	d1/a1,-(sp)		;save regs
+	move.l	d1,a1			;copy to a1
+	move.l	(a1),(a0)		;remove from chain
+	sub.l	#4,a1			;back up to size
+	move.l	(a1),d0			;get size
+	move.l	4,a6			;get ExecBase
+	jsr	_LVOFreeMem(a6)		;free the memory
+	movem.l	(sp)+,d1/a1
+
+	add.l	#4,d1			;point to real hunk start
+
+	move.w	(a2)+,d2		;get number of symbols
+	beq	loop			;no symbols, skip
+
+1$:
+	move.w	6(a1),a0		;get offset for bsr
+	move.l	2(a1),d0		;get offset
+	sub.l	d1,d0			;unrelocate it
+	move.w	#$6100,(a1)+		;bsr pc-relative
+	move.w	a0,(a1)+		;put bsr offset
+	move.l	d0,(a1)+		;put it back
+	move.b	d3,-4(a1)		;save the segment number
+	sub.w	#1,d2			;dec number of symbols
+	bne	1$			;go back
+
+	bra	loop			;do next hunk
+
+done:
+	movem.l	(sp)+,d2/d3/a2/a3/a6	;restore regs
+	rts				;and do the real call
+

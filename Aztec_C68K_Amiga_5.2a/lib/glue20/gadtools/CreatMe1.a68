@@ -1,0 +1,14 @@
+;:ts=8
+
+; jd 8/28/91 new. 
+; CreateMenus is glue only, not an entry in gadtools.library
+	xref	_GadToolsBase
+	xdef	_CreateMenus
+_CreateMenus:
+	move.l	a6,-(sp)
+	move.l	_GadToolsBase,a6
+	lea	8(sp),a1
+	move.l	(a1)+,a0
+	jsr	-48(a6)			;CreateMenusA
+	move.l	(sp)+,a6
+	rts

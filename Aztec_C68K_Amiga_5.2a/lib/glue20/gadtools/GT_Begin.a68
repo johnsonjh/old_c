@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_GadToolsBase
+	xdef	_GT_BeginRefresh
+_GT_BeginRefresh:
+	move.l	a6,-(sp)
+	move.l	_GadToolsBase,a6
+	move.l	8(sp),a0
+	jsr	-90(a6)
+	move.l	(sp)+,a6
+	rts

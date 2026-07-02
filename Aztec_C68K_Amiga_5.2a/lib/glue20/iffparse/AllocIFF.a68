@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_IFFParseBase
+	xdef	_AllocIFF
+_AllocIFF:
+	move.l	a6,-(sp)
+	move.l	_IFFParseBase,a6
+	jsr	-30(a6)
+	move.l	(sp)+,a6
+	rts

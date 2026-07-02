@@ -1,0 +1,15 @@
+;:ts=8
+
+; jd 8/28/91 new. 
+; DrawBevelBox is glue only, not an entry in gadtools.library
+	xref	_GadToolsBase
+	xdef	_DrawBevelBox
+_DrawBevelBox:
+	movem.l	a6/d2-d3,-(sp)
+	move.l	_GadToolsBase,a6
+	lea	16(sp),a1
+	move.l	(a1)+,a0
+	movem.l	(a1)+,d0-d3
+	jsr	-120(a6)		;DrawBevelBoxA
+	movem.l	(sp)+,a6/d2-d3
+	rts

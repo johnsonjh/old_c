@@ -1,0 +1,52 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOAddConfigDev		equ	 -30  
+_LVOAddBootNode			equ	 -36  
+_LVOAllocBoardMem		equ	 -42  
+_LVOAllocConfigDev		equ	 -48  
+_LVOAllocExpansionMem		equ	 -54  
+_LVOConfigBoard			equ	 -60  
+_LVOConfigChain			equ	 -66  
+_LVOFindConfigDev		equ	 -72  
+_LVOFreeBoardMem		equ	 -78  
+_LVOFreeConfigDev		equ	 -84  
+_LVOFreeExpansionMem		equ	 -90  
+_LVOReadExpansionByte		equ	 -96  
+_LVOReadExpansionRom		equ	 -102  
+_LVORemConfigDev		equ	 -108  
+_LVOWriteExpansionByte		equ	 -114  
+_LVOObtainConfigBinding		equ	 -120  
+_LVOReleaseConfigBinding	equ	 -126  
+_LVOSetCurrentBinding		equ	 -132  
+_LVOGetCurrentBinding		equ	 -138  
+_LVOMakeDosNode			equ	 -144  
+_LVOAddDosNode			equ	 -150  
+_LVOExpansionReserved26		equ	 -156  
+_LVOWriteExpansionWord		equ	 -162  
+
+
+
+	public	_LVOAddConfigDev
+	public	_LVOAddBootNode
+	public	_LVOAllocBoardMem
+	public	_LVOAllocConfigDev
+	public	_LVOAllocExpansionMem
+	public	_LVOConfigBoard
+	public	_LVOConfigChain
+	public	_LVOFindConfigDev
+	public	_LVOFreeBoardMem
+	public	_LVOFreeConfigDev
+	public	_LVOFreeExpansionMem
+	public	_LVOReadExpansionByte
+	public	_LVOReadExpansionRom
+	public	_LVORemConfigDev
+	public	_LVOWriteExpansionByte
+	public	_LVOObtainConfigBinding
+	public	_LVOReleaseConfigBinding
+	public	_LVOSetCurrentBinding
+	public	_LVOGetCurrentBinding
+	public	_LVOMakeDosNode
+	public	_LVOAddDosNode
+	public	_LVOExpansionReserved26
+	public	_LVOWriteExpansionWord

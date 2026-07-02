@@ -1,0 +1,12 @@
+;:ts=8
+
+; jd 8/28/91 new
+	xref	_IntuitionBase
+	xdef	_ReportMouse
+_ReportMouse:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	8(sp),d0/a0
+	jsr	-234(a6)		;ReportMouse
+	move.l	(sp)+,a6
+	rts

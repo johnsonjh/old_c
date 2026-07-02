@@ -1,0 +1,14 @@
+;:ts=8
+; jd 8/28/91 new
+; AllocAslRequestTags is in amiga.lib, not asl.library
+
+	xref	_AslBase
+	xdef	_AllocAslRequestTags
+_AllocAslRequestTags:
+	move.l	a6,-(sp)
+	move.l	_AslBase,a6
+	lea	8(sp),a0
+	move.l	(a0)+,d0
+	jsr	-48(a6)		;AllocAslRequest
+	move.l	(sp)+,a6
+	rts

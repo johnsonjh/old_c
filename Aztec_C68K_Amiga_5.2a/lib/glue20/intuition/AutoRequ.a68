@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_AutoRequest
+_AutoRequest:
+	movem.l	a6/a2/a3/d2/d3,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	24(sp),a0/a1/a2/a3
+	movem.l	40(sp),d0/d1/d2/d3
+	jsr	-348(a6)
+	movem.l	(sp)+,a6/a2/a3/d2/d3
+	rts

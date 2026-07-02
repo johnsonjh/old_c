@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_DiskfontBase
+	xdef	_NewScaledDiskFont
+_NewScaledDiskFont:
+	move.l	a6,-(sp)
+	move.l	_DiskfontBase,a6
+	movem.l	8(sp),a0/a1
+	jsr	-54(a6)
+	move.l	(sp)+,a6
+	rts

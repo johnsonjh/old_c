@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_ExpansionBase
+	xdef	_MakeDosNode
+_MakeDosNode:
+	move.l	a6,-(sp)
+	move.l	_ExpansionBase,a6
+	move.l	8(sp),a0
+	jsr	-144(a6)
+	move.l	(sp)+,a6
+	rts

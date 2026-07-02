@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_CxBase
+	xdef	_CreateCxObj
+_CreateCxObj:
+	move.l	a6,-(sp)
+	move.l	_CxBase,a6
+	movem.l	8(sp),d0/a0/a1
+	jsr	-30(a6)
+	move.l	(sp)+,a6
+	rts

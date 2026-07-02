@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_Alert
+_Alert:
+	movem.l	a6/d7,-(sp)
+	move.l	_SysBase,a6
+	move.l	12(sp),d7
+	jsr	-108(a6)
+	movem.l	(sp)+,a6/d7
+	rts

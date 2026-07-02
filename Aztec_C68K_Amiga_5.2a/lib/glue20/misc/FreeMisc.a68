@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_MiscBase
+	xdef	_FreeMiscResource
+_FreeMiscResource:
+	move.l	a6,-(sp)
+	move.l	_MiscBase,a6
+	move.l	8(sp),d0
+	jsr	-12(a6)
+	move.l	(sp)+,a6
+	rts

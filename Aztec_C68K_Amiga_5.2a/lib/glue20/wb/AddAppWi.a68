@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_WorkbenchBase
+	xdef	_AddAppWindowA
+_AddAppWindowA:
+	movem.l	a6/a2,-(sp)
+	move.l	_WorkbenchBase,a6
+	movem.l	12(sp),d0/d1/a0/a1/a2
+	jsr	-48(a6)
+	movem.l	(sp)+,a6/a2
+	rts

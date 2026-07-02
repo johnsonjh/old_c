@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_AslBase
+	xdef	_FreeAslRequest
+_FreeAslRequest:
+	move.l	a6,-(sp)
+	move.l	_AslBase,a6
+	move.l	8(sp),a0
+	jsr	-54(a6)		;jd 8/14/91 changed from -138
+	move.l	(sp)+,a6
+	rts

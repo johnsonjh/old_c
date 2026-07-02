@@ -1,0 +1,195 @@
+			Creating and using libraries using Aztec C v5.0
+
+1. Introduction
+
+	The structure and use of resident libraries is discussed in the Amiga
+Rom Kernel Manuals. In brief, each library has a pointer to a library
+structure. Preceding this structure is a jump table with entry points
+for each function in the library. When a library is opened, the pointer
+to the library structure is returned. When a call is made to the library,
+parameters are placed in the appropriate registers, the library pointer
+is placed in register A6 and the appropriate negative offset is called.
+
+	With previous version of Aztec C, when the user wanted to call a
+library routine, an assembly language glue routine would take the
+arguments from the stack and place them in the proper registers. It
+would then load A6 with the appropriate library base pointer and make
+the call restoring any registers used after the call.
+
+	The funtions pointed to by the library vector would also be an
+assembly language stub that would save registers, set up any registers
+needing it, push the register paramters onto the stack and then
+call the C language function which would handle the request.
+
+	Now, with version 5.0 of Aztec C, the entire procedure is much
+simpler and more efficient.
+
+2. Calling Resident Libraries
+
+	Making a call to a resident library is very simple with version 5.0
+of Aztec C through the use of an "amicall" #pragma statement. (#pragma
+statements are the ANSI supported way of doing magic things with the
+compiler.) An "amicall" statement takes the form:
+
+	#pragma amicall(libBase, offset, func(reg1,reg2,...,regn))
+
+In this statement, the "libBase" parameter is the name of the variable
+which contains a pointer to the library as returned by OpenLibrary().
+"offset" is the POSITIVE offset value for this function. "func" is the
+actual name of the function being called. "regX" is the register in
+which the particular parameter is to be passed. For example, the
+Exec call AllocMem() has a pragma defined as follows:
+
+
+	#pragma amicall(SysBase, 0xc6, AllocMem(d0,d1))
+
+which declares that SysBase is the variable containing the pointer
+to Exec's library base structure. The routine to be called is at
+offset -(0xc6) from the SysBase pointer. The name of the routine is
+"AllocMem" and the two arguments are to be passed in registers d0 and
+d1 respectively.
+
+	Now, when the compiler sees a statement like:
+
+	ptr = AllocMem(sizeof(struct Node), MEMF_PUBLIC|MEMF_CLEAR);
+
+some form of the following code is generated:
+
+	move.l	a6,-(sp)
+	move.l	#14,d0
+	move.l	#$10001,d1
+	move.l	_SysBase,a6
+	jsr		-$c6(a6)
+	move.l	(sp)+,a6
+	move.l	d0,_ptr
+
+Thus, no assembly language glue is required, since the compiler handles
+it all automatically.
+
+	For the resident libraries that are a basic part of the amiga computer,
+ANSI style prototypes and "amicall" pragmas have been defined in the
+file "functions.h" which is found in the standard Aztec C include directory.
+Thus, ANY file which contains a reference to an Amiga library call should:
+
+	#include <functions.h>
+
+Since, there are over 500 amiga functions, precompiling functions.h is
+greatly recommended.
+
+	So, when you are creating your own resident library, the only thing
+you need to do to allow Aztec C programs to make calls to your library
+is to define the appropriate "#pragma amicall" statements in a header
+file and the compiler will do the rest of the work. (For an example, see
+the "mylib.h" header file in this directory.)
+
+
+3. Creating Resident Libraries
+
+	Creating resident libraries is now very simple. In this directory,
+there are two files called "libstart.asm" and "libsup.c". The first
+file contains the assembly language rom tag structure and the assembly
+language initialization required for Aztec C's small model. The only
+thing that needs to be modified is the version number and priority.
+These are defined as two macros called MYVERSION and MYPRI at the
+beginning of the file. Three other names, _myname, _myid, and
+_myInitTab are referenced, but are defined in the "libsup.c" file.
+
+	The "libsup.c" file contains some data structures and four
+initialization and support routines. The first data structure is
+the "libfunctab" which is a table of pointers to functions which
+correspond to the functions which will be pointed to by the vector
+table. The first three entries are required to be a library and
+contain pointers to three routines found in "libsup.c". The fourth
+entry is reserved. All remaining entries are the user defined
+routines. In the example code, two functions are shown, "Func1" and
+"Func2". Finally, a -1 value indicates the end of the table.
+Note that the only thing that needs to be changed here is to change
+"Func1" and "Func2" to point to your own routines and to add the
+names of any additional routines.
+
+	The second structure, "myInitTab", points to the first structure
+and to the startup code in "libstart.asm" and need not be changed.
+
+	Next, are some data definitions which give the revision level, the
+name of the library, and an id string. These should be modified to
+reflect the library that you are creating. The names of the variables
+(myname, myid) should not be changed unless the "libstart.asm" file
+is modified to mirror the changes made.
+
+	The first routine, "_main", is called by the startup code when the
+library is first loaded into memory and only then. Additional calls
+to OpenLibrary will only cause "myOpen" to be called each time.
+"myOpen" handles keeping track of the number of times the library has
+been opened. "myClose" decrements the open count and if it goes to
+zero and somebody asked for an expunge previously, "myExpunge" is
+called.
+
+	The last routine, "myExpunge", is called when the system requires
+more memory. If the open count is zero, the library removes itself
+from the library list and frees the memory associated with the library.
+If the open count is not yet zero, a flag is set so that the library
+will expunge itself when the open count goes to zero. A pointer to
+the library segment list is returned if the expunge is successful which
+allows the code associated with the library to be removed from memory.
+
+	None of these routines need be modified unless some special action
+is required when opening, closing or expunging the library.
+
+	So, the only things that need be modified in the file, "libsup.c",
+are MYREVISION, "myname", "myid" and the names of the user functions
+in the "libfunctab".
+
+	The only thing left to do is to create the user routines. The example
+code shows the two routines "Func1" and "Func2" in the file "lib.c". The
+first routine stores the value passed to it. The second routine adds
+the value passed to it to the value previously stored and returns the new
+value. Note that the only thing special about these routines is the
+declaration of an unitialized variable matching the name of the library
+base of this library. The compiler will automatically assign this variable
+to the register A6 which contains a pointer to the library base when the
+routine is called.
+
+	The parameters to the function are actually in registers when the
+function is called. However, the compiler will automatically deal with
+the parameters because of the "amicall" pragma for each function which
+is defined in the "mylib.h" file.
+
+	And that's all there is to it. The file, "test.c", contains an
+example of how the functions would be used. Note that the file,
+"mylib.h", is included in "test.c" so that the paramters are passed
+in the right registers.
+
+
+4. Miscellaneous Notes
+
+- Any function referenced in an amicall or regcall pragma must have been
+	previously declared (preferably with a prototype of the arguments).
+	For example:
+
+		#pragma amicall(mylibBase, 0x1e, Func1(d0))
+
+	by itself will generate an error, while:
+
+		void Func1(long value);
+
+		#pragma amicall(mylibBase, 0x1e, Func1(d0))
+
+	is correct.
+
+- The other conventions for amiga library pragmas, libcall and syscall,
+	are parsed and handled just like amicall.
+
+- If the compiler is invoked with small code or data, at the beginning
+	of each function which has an accompanying "amicall" pragma, register
+	A4 is saved and loaded with the appropriate pointer to the libraries
+	data. A4 is restored on exit. If invoked with large code and large
+	data, A4 is not affected.
+
+- If you wish to make your library be of general use, you should create
+	a ".fd" file which specifies the parameter passing conventions and
+	function names for your program. Then use the MAPFD program to
+	convert the file into a set of #pragmas and a set of assembly
+	language glue routines. Include the ".fd" file as well since BASIC
+	and other languages may have their own MAPFD type program to get
+	access to new libraries. (See the example "mylib.fd" file.)
+

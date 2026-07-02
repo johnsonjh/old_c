@@ -1,0 +1,13 @@
+;:ts=8
+; jd 8/28/91
+; DoPkt0 is in amiga.lib, not dos.library
+
+	xref	_DOSBase
+	xdef	_DoPkt0
+_DoPkt0:
+	movem.l	a6/d2,-(sp)
+	move.l	_DOSBase,a6
+	movem.l	12(sp),d1-d2
+	jsr	-240(a6)		;DoPkt
+	movem.l	(sp)+,a6/d2
+	rts

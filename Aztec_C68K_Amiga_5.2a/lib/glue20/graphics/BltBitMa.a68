@@ -1,0 +1,13 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_BltBitMap
+_BltBitMap:
+	movem.l	a6/d2/d3/d4/d5/d6/d7/a2,-(sp)
+	move.l	_GfxBase,a6
+	move.l	36(sp),a0
+	movem.l	40(sp),d0/d1/a1
+	movem.l	52(sp),d2/d3/d4/d5/d6/d7/a2
+	jsr	-30(a6)
+	movem.l	(sp)+,a6/d2/d3/d4/d5/d6/d7/a2
+	rts

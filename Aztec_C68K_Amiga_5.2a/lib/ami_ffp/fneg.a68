@@ -1,0 +1,8 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	.Fneg
+.Fneg:
+	move.l	#_LVOSPNeg#,-(sp)
+	jmp	amiga_ffp#
+

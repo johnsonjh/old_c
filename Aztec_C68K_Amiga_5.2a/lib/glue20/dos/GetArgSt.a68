@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_DOSBase
+	xdef	_GetArgStr
+_GetArgStr:
+	move.l	a6,-(sp)
+	move.l	_DOSBase,a6
+	jsr	-534(a6)
+	move.l	(sp)+,a6
+	rts

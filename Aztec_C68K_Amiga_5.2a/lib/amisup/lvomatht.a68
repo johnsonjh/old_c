@@ -1,0 +1,38 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOSPAtan		equ	 -30  
+_LVOSPSin		equ	 -36  
+_LVOSPCos		equ	 -42  
+_LVOSPTan		equ	 -48  
+_LVOSPSincos		equ	 -54  
+_LVOSPSinh		equ	 -60  
+_LVOSPCosh		equ	 -66  
+_LVOSPTanh		equ	 -72  
+_LVOSPExp		equ	 -78  
+_LVOSPLog		equ	 -84  
+_LVOSPPow		equ	 -90  
+_LVOSPSqrt		equ	 -96  
+_LVOSPTieee		equ	 -102  
+_LVOSPFieee		equ	 -108  
+_LVOSPAsin		equ	 -114  
+_LVOSPAcos		equ	 -120  
+_LVOSPLog10		equ	 -126  
+
+	public	_LVOSPAtan
+	public	_LVOSPSin
+	public	_LVOSPCos
+	public	_LVOSPTan
+	public	_LVOSPSincos
+	public	_LVOSPSinh
+	public	_LVOSPCosh
+	public	_LVOSPTanh
+	public	_LVOSPExp
+	public	_LVOSPLog
+	public	_LVOSPPow
+	public	_LVOSPSqrt
+	public	_LVOSPTieee
+	public	_LVOSPFieee
+	public	_LVOSPAsin
+	public	_LVOSPAcos
+	public	_LVOSPLog10

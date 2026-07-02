@@ -1,0 +1,12 @@
+;:ts=8
+
+; jd 8/24/91 changed to save and load d7 in addition to d1-d6
+	xref	_DOSBase
+	xdef	_DoPkt
+_DoPkt:
+	movem.l	a6/d2-d7,-(sp)
+	move.l	_DOSBase,a6
+	movem.l	32(sp),d1-d7
+	jsr	-240(a6)
+	movem.l	(sp)+,a6/d2-d7
+	rts

@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_ExpansionBase
+	xdef	_AllocConfigDev
+_AllocConfigDev:
+	move.l	a6,-(sp)
+	move.l	_ExpansionBase,a6
+	jsr	-48(a6)
+	move.l	(sp)+,a6
+	rts

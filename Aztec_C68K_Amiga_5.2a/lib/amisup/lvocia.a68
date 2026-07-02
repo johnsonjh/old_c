@@ -1,0 +1,13 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOSetICR		equ	-24
+_LVOAbleICR		equ	-18
+_LVORemICRVector	equ	-12
+_LVOAddICRVector	equ	-6
+
+	public	_LVOSetICR
+	public	_LVOAbleICR
+	public	_LVORemICRVector
+	public	_LVOAddICRVector
+

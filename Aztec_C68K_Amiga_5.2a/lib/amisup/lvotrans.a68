@@ -1,0 +1,6 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOTranslate		equ	-30
+
+	public	_LVOTranslate

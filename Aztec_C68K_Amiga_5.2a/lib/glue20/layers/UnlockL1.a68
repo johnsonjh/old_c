@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_LayersBase
+	xdef	_UnlockLayers
+_UnlockLayers:
+	move.l	a6,-(sp)
+	move.l	_LayersBase,a6
+	move.l	8(sp),a0
+	jsr	-114(a6)
+	move.l	(sp)+,a6
+	rts

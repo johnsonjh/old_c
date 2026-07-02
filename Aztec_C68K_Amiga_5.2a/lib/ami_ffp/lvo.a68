@@ -1,0 +1,66 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+
+_LVOSPCeil	equ	-96
+_LVOSPFloor	equ	-90
+_LVOSPDiv	equ	-84
+_LVOSPMul	equ	-78
+_LVOSPSub	equ	-72
+_LVOSPAdd	equ	-66
+_LVOSPNeg	equ	-60
+_LVOSPAbs	equ	-54
+_LVOSPTst	equ	-48
+_LVOSPCmp	equ	-42
+_LVOSPFlt	equ	-36
+_LVOSPFix	equ	-30
+
+	public	_LVOSPCeil
+	public	_LVOSPFloor
+	public	_LVOSPDiv
+	public	_LVOSPMul
+	public	_LVOSPSub
+	public	_LVOSPAdd
+	public	_LVOSPNeg
+	public	_LVOSPAbs
+	public	_LVOSPTst
+	public	_LVOSPCmp
+	public	_LVOSPFlt
+	public	_LVOSPFix
+
+_LVOSPLog10	equ	-126
+_LVOSPAcos	equ	-120
+_LVOSPAsin	equ	-114
+_LVOSPFieee	equ	-108
+_LVOSPTieee	equ	-102
+_LVOSPSqrt	equ	-96
+_LVOSPPow	equ	-90
+_LVOSPLog	equ	-84
+_LVOSPExp	equ	-78
+_LVOSPTanh	equ	-72
+_LVOSPCosh	equ	-66
+_LVOSPSinh	equ	-60
+_LVOSPSincos	equ	-54
+_LVOSPTan	equ	-48
+_LVOSPCos	equ	-42
+_LVOSPSin	equ	-36
+_LVOSPAtan	equ	-30
+
+	public	_LVOSPLog10
+	public	_LVOSPAcos
+	public	_LVOSPAsin
+	public	_LVOSPFieee
+	public	_LVOSPTieee
+	public	_LVOSPSqrt
+	public	_LVOSPPow
+	public	_LVOSPLog
+	public	_LVOSPExp
+	public	_LVOSPTanh
+	public	_LVOSPCosh
+	public	_LVOSPSinh
+	public	_LVOSPSincos
+	public	_LVOSPTan
+	public	_LVOSPCos
+	public	_LVOSPSin
+	public	_LVOSPAtan
+

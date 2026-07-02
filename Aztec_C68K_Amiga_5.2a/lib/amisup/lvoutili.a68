@@ -1,0 +1,54 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOFindTagItem			equ	 -30  
+_LVOGetTagData			equ	 -36  
+_LVOPackBoolTags		equ	 -42  
+_LVONextTagItem			equ	 -48  
+_LVOFilterTagChanges		equ	 -54  
+_LVOMapTags			equ	 -60  
+_LVOAllocateTagItems		equ	 -66  
+_LVOCloneTagItems		equ	 -72  
+_LVOFreeTagItems		equ	 -78  
+_LVORefreshTagItemClones	equ	 -84  
+_LVOTagInArray			equ	 -90  
+_LVOFilterTagItems		equ	 -96  
+_LVOCallHookPkt			equ	 -102  
+_LVOAmiga2Date			equ	 -120  
+_LVODate2Amiga			equ	 -126  
+_LVOCheckDate			equ	 -132  
+_LVOSMult32			equ	 -138  
+_LVOUMult32			equ	 -144  
+_LVOSDivMod32			equ	 -150  
+_LVOUDivMod32			equ	 -156  
+_LVOStricmp			equ	 -162	;jd 8/28/91
+_LVOStrnicmp			equ	 -168	;jd 8/28/91
+_LVOToUpper			equ	 -174	;jd 8/28/91
+_LVOToLower			equ	 -180	;jd 8/28/91
+
+
+
+	public	_LVOFindTagItem
+	public	_LVOGetTagData
+	public	_LVOPackBoolTags
+	public	_LVONextTagItem
+	public	_LVOFilterTagChanges
+	public	_LVOMapTags
+	public	_LVOAllocateTagItems
+	public	_LVOCloneTagItems
+	public	_LVOFreeTagItems
+	public	_LVORefreshTagItemClones
+	public	_LVOTagInArray
+	public	_LVOFilterTagItems
+	public	_LVOCallHookPkt
+	public	_LVOAmiga2Date
+	public	_LVODate2Amiga
+	public	_LVOCheckDate
+	public	_LVOSMult32
+	public	_LVOUMult32
+	public	_LVOSDivMod32
+	public	_LVOUDivMod32
+	public	_LVOStricmp	;jd 8/28/91
+	public	_LVOStrnicmp	;jd 8/28/91
+	public	_LVOToUpper	;jd 8/28/91
+	public	_LVOToLower	;jd 8/28/91

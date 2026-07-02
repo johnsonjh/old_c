@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_BattMemBase
+	xdef	_ObtainBattSemaphore
+_ObtainBattSemaphore:
+	move.l	a6,-(sp)
+	move.l	_BattMemBase,a6
+	jsr	-6(a6)
+	move.l	(sp)+,a6
+	rts

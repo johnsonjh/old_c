@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_MakeScreen
+_MakeScreen:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	move.l	8(sp),a0
+	jsr	-378(a6)
+	move.l	(sp)+,a6
+	rts

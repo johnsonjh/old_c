@@ -1,0 +1,14 @@
+;:ts=8
+
+; jd 8/28/91 new
+; SetAttrs is in amiga.lib, not intuition.library
+	xref	_IntuitionBase
+	xdef	_SetAttrs
+_SetAttrs:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	lea	8(a7),a1
+	move.l	(a1)+,a0
+	jsr	-648(a6)		;SetAttrsA
+	move.l	(sp)+,a6
+	rts

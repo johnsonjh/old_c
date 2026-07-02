@@ -1,0 +1,10 @@
+; Copyright (C) 1990 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_GiveUnit
+_GiveUnit
+	move.l	a6,-(sp)
+	move.l	8(sp),a6
+	jsr	-24(a6)
+	move.l	(sp)+,a6
+	rts

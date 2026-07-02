@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_NewModifyProp
+_NewModifyProp:
+	movem.l	a6/a2/d2/d3/d4/d5,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	28(sp),a0/a1/a2
+	movem.l	40(sp),d0/d1/d2/d3/d4/d5
+	jsr	-468(a6)
+	movem.l	(sp)+,a6/a2/d2/d3/d4/d5
+	rts

@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_AslBase
+	xdef	_AllocAslRequest
+_AllocAslRequest:
+	move.l	a6,-(sp)
+	move.l	_AslBase,a6
+	movem.l	8(sp),d0/a0	;jd 8/14/91 changed from a0/a1
+	jsr	-48(a6)		;jd 8/14/91 changed from -132
+	move.l	(sp)+,a6
+	rts

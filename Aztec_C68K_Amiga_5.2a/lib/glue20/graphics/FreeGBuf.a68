@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_FreeGBuffers
+_FreeGBuffers:
+	move.l	a6,-(sp)
+	move.l	_GfxBase,a6
+	movem.l	8(sp),a0/a1
+	move.l	16(sp),d0
+	jsr	-600(a6)
+	move.l	(sp)+,a6
+	rts

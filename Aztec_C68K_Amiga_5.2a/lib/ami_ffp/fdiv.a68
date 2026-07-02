@@ -1,0 +1,8 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	.Fdiv
+.Fdiv:
+	move.l	#_LVOSPDiv#,-(sp)
+	jmp	amiga_ffp#
+

@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_InitBitMap
+_InitBitMap:
+	movem.l	a6/d2,-(sp)
+	move.l	_GfxBase,a6
+	move.l	12(sp),a0
+	movem.l	16(sp),d0/d1/d2
+	jsr	-390(a6)
+	movem.l	(sp)+,a6/d2
+	rts

@@ -1,0 +1,12 @@
+;:ts=8
+
+; jd 8/28/91 new
+	xref	_UtilityBase
+	xdef	_ToUpper
+_ToUpper:
+	move.l	a6,-(sp)
+	move.l	_UtilityBase,a6
+	move.l	8(sp),d0
+	jsr	-174(a6)		;ToUpper
+	move.l	(sp)+,a6
+	rts

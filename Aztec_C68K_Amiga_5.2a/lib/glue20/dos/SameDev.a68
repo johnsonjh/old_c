@@ -1,0 +1,13 @@
+;:ts=8
+; jd 8/24/91 new
+; SameDevice is a new routine in dos.library
+
+	xref	_DOSBase
+	xdef	_SameDevice
+_SameDevice:
+	movem.l	a6/d2,-(sp)
+	move.l	_DOSBase,a6
+	movem.l	12(sp),d1-d2
+	jsr	-984(a6)
+	movem.l	(sp)+,a6/d2
+	rts

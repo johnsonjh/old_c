@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_MathIeeeDoubTransBase
+	xdef	_IEEEDPPow
+_IEEEDPPow:
+	movem.l	a6/d2/d3,-(sp)
+	move.l	_MathIeeeDoubTransBase,a6
+	movem.l	16(sp),d2/d3
+	movem.l	24(sp),d0/d1
+	jsr	-90(a6)
+	movem.l	(sp)+,a6/d2/d3
+	rts

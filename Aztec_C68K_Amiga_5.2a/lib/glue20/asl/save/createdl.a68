@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_AslBase
+	xdef	_CreateDList
+_CreateDList:
+	movem.l	a6/a2,-(sp)
+	move.l	_AslBase,a6
+	movem.l	12(sp),a0/a1/a2
+	jsr	-66(a6)
+	movem.l	(sp)+,a6/a2
+	rts

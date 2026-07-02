@@ -1,0 +1,14 @@
+;:ts=8
+; jd 8/28/91 new
+; AddAppMenuItem is in amiga.lib but not wb.library
+
+	xref	_WorkbenchBase
+	xdef	_AddAppMenuItem
+_AddAppMenuItem:
+	movem.l	a6/a2,-(sp)
+	move.l	_WorkbenchBase,a6
+	lea	12(sp),a2
+	movem.l	(a2)+,d0-d1/a0-a1
+	jsr	-72(a6)			;AddAppMenuItemA
+	movem.l	(sp)+,a6/a2
+	rts

@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_WritePixel
+_WritePixel:
+	move.l	a6,-(sp)
+	move.l	_GfxBase,a6
+	move.l	8(sp),a1
+	movem.l	12(sp),d0/d1
+	jsr	-324(a6)
+	move.l	(sp)+,a6
+	rts

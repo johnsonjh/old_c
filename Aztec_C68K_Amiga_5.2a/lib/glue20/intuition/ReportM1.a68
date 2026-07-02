@@ -1,0 +1,14 @@
+;:ts=8
+
+;jd 8/28/91 used to be in file ReportMo.a68
+; ReportMouse1 is in amiga.lib, not in intuition.library
+	xref	_IntuitionBase
+	xdef	_ReportMouse1
+_ReportMouse1:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	move.l	8(sp),a0
+	move.l	12(sp),d0
+	jsr	-234(a6)	;ReportMouse
+	move.l	(sp)+,a6
+	rts

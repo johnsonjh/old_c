@@ -1,0 +1,22 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOUpdateWorkbench		equ	 -30	;jd 8/28/91 new
+_LVOuoteWorkbench		equ	 -36	;jd 8/28/91 new
+_LVOStartWorkbench		equ	 -42  
+_LVOAddAppWindowA		equ	 -48  
+_LVORemoveAppWindow		equ	 -54  
+_LVOAddAppIconA			equ	 -60  
+_LVORemoveAppIcon		equ	 -66  
+_LVOAddAppMenuItemA		equ	 -72  
+_LVORemoveAppMenuItem		equ	 -78  
+
+	public	_LVOUpdateWorkbench		;jd 8/28/91
+	public	_LVOQuoteWorkbench		;jd 8/28/91
+	public	_LVOStartWorkbench
+	public	_LVOAddAppWindowA
+	public	_LVORemoveAppWindow
+	public	_LVOAddAppIconA
+	public	_LVORemoveAppIcon
+	public	_LVOAddAppMenuItemA
+	public	_LVORemoveAppMenuItem

@@ -1,0 +1,77 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	KPutChar
+	public	KGetChar
+
+	public	KGetNum
+	public	_KGetNum
+	public	_kgetnum
+_KGetNum
+_kgetnum
+KGetNum
+	movem.l	d2-d4,-(sp)	;save register
+1$
+	move.l	#0,d2		;init value to 0
+	move.l	#0,d3		;init char count to 0
+	move.l	#0,d4		;init sign to zero
+	jsr	KGetChar	;get first character
+	cmp.b	#'-',d0		;check for minus sign
+	bne	3$		;no, skip
+	jsr	KPutChar	;echo the character
+	add.w	#1,d3		;bump character count
+	move.l	#-1,d4		;set sign to negative
+	bra	3$		;and skip
+2$
+	jsr	KGetChar	;get the next character
+3$
+	cmp.b	#8,d0		;is it a backspace?
+	bne	4$		;no, skip
+	tst.w	d3		;are there any characters?
+	beq	1$		;no, so go back to start
+	jsr	KPutChar	;back up the cursor
+	move.l	#' ',d0		;use space to erase
+	jsr	KPutChar	;erase it
+	move.l	#8,d0		;need to back up again
+	jsr	KPutChar
+	sub.w	#1,d3		;decrement character count
+	beq	1$		;if at beginning, go to top
+	swap	d2		;get hi word for div by 10
+	move.l	#0,d1		;preset d1 to zero
+	move.w	d2,d1		;copy high word of d2
+	divu	#10,d1		;divide by 10
+	swap	d1		;get high part
+	move.w	d1,d2		;copy back to d2
+	swap	d2		;swap it
+	divu	#10,d2		;and divide by 10 again
+	move.w	d2,d1		;copy low word to d1
+	move.l	d1,d2		;and take all d1 as d2
+4$
+	cmp.b	#'0',d0		;check against 0
+	bcs	5$		;if less, skip
+	cmp.b	#'9',d0		;check against 9
+	bhi	5$		;if more, skip
+	move.l	d2,d1		;do multiply by 10
+	asl.l	#2,d1
+	bvs	2$
+	add.l	d2,d1
+	bvs	2$
+	asl.l	#1,d1
+	sub.b	#'0',d0		;convert char to number
+	add.l	d0,d1		;add to value
+	bcs	2$		;if overflow, ignore
+	add.b	#'0',d0		;else convert to char
+	move.l	d1,d2		;save new value
+	jsr	KPutChar	;echo the char
+	add.w	#1,d3		;bump the char counter
+5$
+	cmp.b	#$d,d0		;check for return
+	bne	2$		;no, ignore
+	tst.b	d4		;check sign
+	beq	7$		;if zero, skip
+	neg.l	d2		;else negate value
+7$
+	move.l	d2,d0		;copy value for return
+	movem.l	(sp)+,d2-d4	;restore register
+	rts			;and return
+

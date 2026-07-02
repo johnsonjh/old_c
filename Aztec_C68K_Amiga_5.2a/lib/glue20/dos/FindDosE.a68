@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_DOSBase
+	xdef	_FindDosEntry
+_FindDosEntry:
+	movem.l	a6/d2/d3,-(sp)
+	move.l	_DOSBase,a6
+	movem.l	16(sp),d1/d2/d3
+	jsr	-684(a6)
+	movem.l	(sp)+,a6/d2/d3
+	rts

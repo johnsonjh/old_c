@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_BuildSysRequest
+_BuildSysRequest:
+	movem.l	a6/a2/a3/d2,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	20(sp),a0/a1/a2/a3
+	movem.l	36(sp),d0/d1/d2
+	jsr	-360(a6)
+	movem.l	(sp)+,a6/a2/a3/d2
+	rts

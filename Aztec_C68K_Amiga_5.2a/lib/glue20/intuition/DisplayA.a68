@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_DisplayAlert
+_DisplayAlert:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	8(sp),d0/a0
+	move.l	16(sp),d1
+	jsr	-90(a6)
+	move.l	(sp)+,a6
+	rts

@@ -1,0 +1,14 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_TextFit
+_TextFit:
+	movem.l	a6/a2/a3/d2/d3,-(sp)
+	move.l	_GfxBase,a6
+	move.l	24(sp),a1
+	move.l	28(sp),a0
+	movem.l	32(sp),d0/a2/a3
+	movem.l	44(sp),d1/d2/d3
+	jsr	-696(a6)
+	movem.l	(sp)+,a6/a2/a3/d2/d3
+	rts

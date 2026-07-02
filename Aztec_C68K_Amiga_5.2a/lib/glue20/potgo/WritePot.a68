@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_PotgoBase
+	xdef	_WritePotgo
+_WritePotgo:
+	move.l	a6,-(sp)
+	move.l	_PotgoBase,a6
+	movem.l	8(sp),d0/d1
+	jsr	-18(a6)
+	move.l	(sp)+,a6
+	rts

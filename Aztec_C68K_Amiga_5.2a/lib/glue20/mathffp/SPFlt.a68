@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_MathBase
+	xdef	_SPFlt
+_SPFlt:
+	move.l	a6,-(sp)
+	move.l	_MathBase,a6
+	move.l	8(sp),d0
+	jsr	-36(a6)
+	move.l	(sp)+,a6
+	rts

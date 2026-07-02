@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_TimerBase
+	xdef	_ReadEClock
+_ReadEClock:
+	move.l	a6,-(sp)
+	move.l	_TimerBase,a6
+	move.l	8(sp),a0
+	jsr	-60(a6)
+	move.l	(sp)+,a6
+	rts

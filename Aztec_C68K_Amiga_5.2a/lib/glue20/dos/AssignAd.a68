@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_DOSBase
+	xdef	_AssignAdd
+_AssignAdd:
+	movem.l	a6/d2,-(sp)
+	move.l	_DOSBase,a6
+	movem.l	12(sp),d1/d2
+	jsr	-630(a6)
+	movem.l	(sp)+,a6/d2
+	rts

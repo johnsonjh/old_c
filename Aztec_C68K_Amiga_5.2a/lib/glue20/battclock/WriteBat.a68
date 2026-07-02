@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_BattClockBase
+	xdef	_WriteBattClock
+_WriteBattClock:
+	move.l	a6,-(sp)
+	move.l	_BattClockBase,a6
+	move.l	8(sp),d0
+	jsr	-18(a6)
+	move.l	(sp)+,a6
+	rts

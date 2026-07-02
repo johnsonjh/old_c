@@ -1,0 +1,11 @@
+; Copyright (C) 1987 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_pow
+_pow:
+	move.l	#_LVOIEEEDPPow#,a0
+	movem.l	12(sp),d2/d3
+	move.l	8(sp),d1
+	move.l	4(sp),d0
+	jmp	amiga_ieee_trans#
+

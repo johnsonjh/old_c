@@ -1,0 +1,14 @@
+;:ts=8
+
+; jd 8/28/91 new
+; SetGadgetAttrs is in amiga.lib, not intuition.library
+	xref	_IntuitionBase
+	xdef	_SetGadgetAttrs
+_SetGadgetAttrs:
+	movem.l	a6/a2/a3,-(sp)
+	move.l	_IntuitionBase,a6
+	lea	16(sp),a3
+	movem.l	(a3)+,a0-a2
+	jsr	-660(a6)		;SetGadgetAttrsA
+	movem.l	(sp)+,a6/a2/a3
+	rts

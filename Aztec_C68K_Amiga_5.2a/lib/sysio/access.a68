@@ -1,0 +1,8 @@
+;
+; Copyright 1989 Manx Software Systems
+; All Rights Reserved
+;
+	public	_access,__access
+_access
+	jmp	__access
+	end

@@ -1,0 +1,49 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOConcatCList	equ	-156
+_LVOSubCList	equ	-150
+_LVOCopyCList	equ	-144
+_LVOSplitCList	equ	-138
+_LVOPeekCLMark	equ	-132
+_LVOIncrCLMark	equ	-126
+_LVOMarkCList	equ	-120
+_LVOGetCLBuf	equ	-114
+_LVOPutCLBuf	equ	-108
+_LVOUnPutCLWord	equ	-102
+_LVOUnGetCLWord	equ	-96
+_LVOGetCLWord	equ	-90
+_LVOPutCLWord	equ	-84
+_LVOUnPutCLChar	equ	-78
+_LVOUnGetCLChar	equ	-72
+_LVOGetCLChar	equ	-66
+_LVOPutCLChar	equ	-60
+_LVOSizeCList	equ	-54
+_LVOFlushCList	equ	-48
+_LVOFreeCList	equ	-42
+_LVOAllocCList	equ	-36
+_LVOInitCLPool	equ	-30
+
+	public	_LVOConcatCList
+	public	_LVOSubCList
+	public	_LVOCopyCList
+	public	_LVOSplitCList
+	public	_LVOPeekCLMark
+	public	_LVOIncrCLMark
+	public	_LVOMarkCList
+	public	_LVOGetCLBuf
+	public	_LVOPutCLBuf
+	public	_LVOUnPutCLWord
+	public	_LVOUnGetCLWord
+	public	_LVOGetCLWord
+	public	_LVOPutCLWord
+	public	_LVOUnPutCLChar
+	public	_LVOUnGetCLChar
+	public	_LVOGetCLChar
+	public	_LVOPutCLChar
+	public	_LVOSizeCList
+	public	_LVOFlushCList
+	public	_LVOFreeCList
+	public	_LVOAllocCList
+	public	_LVOInitCLPool
+

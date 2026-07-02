@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_OrRegionRegion
+_OrRegionRegion:
+	move.l	a6,-(sp)
+	move.l	_GfxBase,a6
+	movem.l	8(sp),a0/a1
+	jsr	-612(a6)
+	move.l	(sp)+,a6
+	rts

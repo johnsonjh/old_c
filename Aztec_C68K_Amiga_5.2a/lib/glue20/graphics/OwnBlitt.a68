@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_OwnBlitter
+_OwnBlitter:
+	move.l	a6,-(sp)
+	move.l	_GfxBase,a6
+	jsr	-456(a6)
+	move.l	(sp)+,a6
+	rts

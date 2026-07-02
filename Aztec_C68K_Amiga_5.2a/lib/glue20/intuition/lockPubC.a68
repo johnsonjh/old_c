@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_lockPubClass
+_lockPubClass:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	jsr	-720(a6)
+	move.l	(sp)+,a6
+	rts

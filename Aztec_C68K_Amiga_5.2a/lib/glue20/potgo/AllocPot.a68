@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_PotgoBase
+	xdef	_AllocPotBits
+_AllocPotBits:
+	move.l	a6,-(sp)
+	move.l	_PotgoBase,a6
+	move.l	8(sp),d0
+	jsr	-6(a6)
+	move.l	(sp)+,a6
+	rts

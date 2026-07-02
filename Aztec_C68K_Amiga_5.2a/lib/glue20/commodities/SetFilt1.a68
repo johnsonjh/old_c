@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_CxBase
+	xdef	_SetFilterIX
+_SetFilterIX:
+	move.l	a6,-(sp)
+	move.l	_CxBase,a6
+	movem.l	8(sp),a0/a1
+	jsr	-126(a6)
+	move.l	(sp)+,a6
+	rts

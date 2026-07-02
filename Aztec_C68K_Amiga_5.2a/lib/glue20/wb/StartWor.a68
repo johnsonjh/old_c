@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_WorkbenchBase
+	xdef	_StartWorkbench
+_StartWorkbench:
+	move.l	a6,-(sp)
+	move.l	_WorkbenchBase,a6
+	movem.l	8(sp),d0/d1
+	jsr	-42(a6)
+	move.l	(sp)+,a6
+	rts

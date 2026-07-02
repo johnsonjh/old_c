@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_CachePostDMA
+_CachePostDMA:
+	move.l	a6,-(sp)
+	move.l	_SysBase,a6
+	movem.l	8(sp),a0-a1
+	move.l	16(sp),d1
+	jsr	-768(a6)
+	move.l	(sp)+,a6
+	rts

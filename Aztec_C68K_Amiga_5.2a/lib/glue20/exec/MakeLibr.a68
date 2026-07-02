@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_MakeLibrary
+_MakeLibrary:
+	movem.l	a6/a2,-(sp)
+	move.l	_SysBase,a6
+	movem.l	12(sp),a0/a1/a2
+	movem.l	24(sp),d0/d1
+	jsr	-84(a6)
+	movem.l	(sp)+,a6/a2
+	rts

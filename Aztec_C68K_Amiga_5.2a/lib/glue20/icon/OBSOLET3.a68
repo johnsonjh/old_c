@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_IconBase
+	xdef	_OBSOLETEAllocWBObject
+_OBSOLETEAllocWBObject:
+	move.l	a6,-(sp)
+	move.l	_IconBase,a6
+	jsr	-66(a6)
+	move.l	(sp)+,a6
+	rts

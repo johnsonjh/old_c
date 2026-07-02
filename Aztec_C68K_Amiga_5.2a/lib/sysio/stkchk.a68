@@ -1,0 +1,19 @@
+;:ts=8
+; Copyright (C) 1986,1987 by Manx Software Systems, Inc.
+;
+
+	public	__stkbase
+	public	__stkover
+
+	public	__stkchk
+__stkchk:
+	move.l	__stkbase,a0
+	cmp.l	#'MANX',(a0)
+	bne	crunch
+	add.w	#128,a0
+	cmp.l	a7,a0
+	bge	crunch
+	rts
+crunch:
+	jmp	__stkover
+

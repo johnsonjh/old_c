@@ -1,0 +1,15 @@
+;:ts=8
+; jd 8/24/91 new
+; FPrintf is in amiga.lib, not dos.library
+
+	xref	_DOSBase
+	xdef	_FPrintf
+_FPrintf:
+	movem.l	a6/d2-d3,-(sp)
+	move.l	_DOSBase,a6
+	pea	24(a7)
+	move.l	(a7)+,d3
+	movem.l	16(sp),d1-d2
+	jsr	-354(a6)		;VFPrintf
+	movem.l	(sp)+,a6/d2-d3
+	rts

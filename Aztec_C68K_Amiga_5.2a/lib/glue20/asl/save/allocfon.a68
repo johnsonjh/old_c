@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_AslBase
+	xdef	_AllocFontRequest
+_AllocFontRequest:
+	move.l	a6,-(sp)
+	move.l	_AslBase,a6
+	jsr	-48(a6)
+	move.l	(sp)+,a6
+	rts

@@ -1,0 +1,111 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_kputchar
+	public	_KPutChar
+	public	KPutChar
+	public	_kputc
+	public	_kputch
+	public	_KPutCh
+_kputchar
+_KPutChar
+_kputc
+_kputch
+_KPutCh
+	if INT32
+	move.l	4(sp),d0
+	else
+	move.l	#0,d0
+	move.w	4(sp),d0
+	endc
+KPutChar
+	movem.l	d0/a6,-(sp)
+	move.l	4,a6
+	jsr	-516(a6)
+	movem.l	(sp)+,d0/a6
+	rts
+
+	public	_KPutStr
+	public	_kputstr
+	public	KPutStr
+	public	_kputs
+	public	_KPutS
+_kputstr
+_KPutStr
+_kputs
+_KPutS
+	move.l	4(sp),a0
+KPutStr
+	move.b	(a0)+,d0
+	beq	1$
+	bsr	KPutChar
+	bra	KPutStr
+1$
+	rts
+
+	public	_kgetchar
+	public	_KGetChar
+	public	KGetChar
+	public	_kgetc
+	public	_KGetCh
+	public	_kgetch
+_kgetchar
+_KGetChar
+KGetChar
+_kgetc
+_KGetCh
+_kgetch
+	bsr	_KMayGetChar
+	tst.l	d0
+	bmi	_KGetChar
+	rts
+
+	public	_KMayGetChar
+	public	KMayGetChar
+	public	_KMayGetCh
+_KMayGetChar
+KMayGetChar
+_KMayGetCh
+	move.l	a6,-(sp)
+	move.l	4,a6
+	jsr	-510(a6)
+	move.l	(sp)+,a6
+	rts
+
+	public	_KPutFmt
+_KPutFmt
+	move.l	8(sp),a1
+	bra	putf
+
+	public	_KPrintF
+	public	_kprintf
+_kprintf
+_KPrintF
+	lea	8(sp),a1
+putf
+	move.l	4(sp),a0
+
+	public	KPutFmt
+KPutFmt
+	move.l	a2,-(sp)
+	lea	KPutChar,a2
+	bsr	KDoFmt
+	move.l	(sp)+,a2
+	rts
+
+	public	KDoFmt
+KDoFmt
+	move.l	a6,-(sp)
+	move.l	4,a6
+	jsr	-522(a6)
+	move.l	(sp)+,a6
+	rts
+
+	public	_KDoFmt
+_KDoFmt
+	movem.l	a2/a3,-(sp)
+	movem.l	12(sp),a0/a1/a2/a3
+	bsr	KDoFmt
+	movem.l	(sp)+,a2/a3
+	rts
+

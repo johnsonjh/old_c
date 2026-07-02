@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_Supervisor
+_Supervisor:
+	movem.l	a6/a5,-(sp)
+	move.l	_SysBase,a6
+	move.l	12(sp),a5
+	jsr	-30(a6)
+	movem.l	(sp)+,a6/a5
+	rts

@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_ExpansionBase
+	xdef	_AllocBoardMem
+_AllocBoardMem:
+	move.l	a6,-(sp)
+	move.l	_ExpansionBase,a6
+	move.l	8(sp),d0
+	jsr	-42(a6)
+	move.l	(sp)+,a6
+	rts

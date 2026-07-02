@@ -1,0 +1,46 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_RangeRand
+	public	_RangeRan
+_RangeRand
+_RangeRan
+	movem.l	d4/d5,-(sp)
+	move.w	14(sp),d5
+	move.w	d5,d4
+	sub.w	#1,d4
+	move.l	_RangeSeed,d0
+L1
+	add.l	d0,d0
+	bhi	L2
+	eori.l	#$1d872b41,d0
+L2
+	lsr.w	#1,d4
+	bne	L1
+	move.l	d0,_RangeSeed
+	tst.w	d5
+	bne	L3
+	swap	d0
+	bra	L4
+L3
+	mulu	d5,d0
+L4
+	clr.w	d0
+	swap	d0
+	movem.l	(sp)+,d4/d5
+	rts
+
+	public	_FastRand
+_FastRand
+	move.l	4(sp),d0
+	add.l	d0,d0
+	bhi	L5
+	eori.l	#$1d872b41,d0
+L5
+	rts
+
+	dseg
+	public	_RangeSeed
+_RangeSeed:
+	dc.l	0
+

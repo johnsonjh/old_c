@@ -1,0 +1,14 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOAddTime		equ	-42
+_LVOSubTime		equ	-48
+_LVOCmpTime		equ	-54
+_LVOReadEClock		equ	-60
+_LVOGetSysTime		equ	-66
+
+	public	_LVOAddTime
+	public	_LVOSubTime
+	public	_LVOCmpTime
+	public	_LVOReadEClock
+	public	_LVOGetSysTime

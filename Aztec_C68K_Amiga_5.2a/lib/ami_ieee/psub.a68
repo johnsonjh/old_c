@@ -1,0 +1,8 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	.Psub
+.Psub:
+	move.l	#_LVOIEEEDPSub#,-(sp)
+	jmp	amiga_ieee#
+

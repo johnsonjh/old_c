@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_DOSBase
+	xdef	_LockRecord
+_LockRecord:
+	movem.l	a6/d2/d3/d4/d5,-(sp)
+	move.l	_DOSBase,a6
+	movem.l	24(sp),d1/d2/d3/d4/d5
+	jsr	-270(a6)
+	movem.l	(sp)+,a6/d2/d3/d4/d5
+	rts

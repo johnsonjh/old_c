@@ -1,0 +1,13 @@
+;:ts=8
+
+	xref	_DOSBase
+	xdef	_CreateNewProc
+	xdef	_CreateNewProcTagList	;jd 8/24/91 new
+_CreateNewProc:
+_CreateNewProcTagList:			;jd 8/24/91 new
+	move.l	a6,-(sp)
+	move.l	_DOSBase,a6
+	move.l	8(sp),d1
+	jsr	-498(a6)
+	move.l	(sp)+,a6
+	rts

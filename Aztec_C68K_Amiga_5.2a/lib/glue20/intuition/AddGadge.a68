@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_AddGadget
+_AddGadget:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	8(sp),a0/a1
+	move.l	16(sp),d0
+	jsr	-42(a6)
+	move.l	(sp)+,a6
+	rts

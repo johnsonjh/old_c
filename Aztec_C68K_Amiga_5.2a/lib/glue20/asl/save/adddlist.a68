@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_AslBase
+	xdef	_AddDListItems
+_AddDListItems:
+	move.l	a6,-(sp)
+	move.l	_AslBase,a6
+	move.l	8(sp),a0
+	move.l	12(sp),d0
+	jsr	-78(a6)
+	move.l	(sp)+,a6
+	rts

@@ -1,0 +1,5 @@
+#pragma amicall(WorkbenchBase, 0x30, AddAppWindowA(d0,d1,a0,a1,a2))
+#pragma amicall(WorkbenchBase, 0x36, RemoveAppWindow(a0))
+#pragma amicall(WorkbenchBase, 0x42, RemoveAppIcon(a0))
+#pragma amicall(WorkbenchBase, 0x48, AddAppMenuItemA(d0,d1,a0,a1,a2))
+#pragma amicall(WorkbenchBase, 0x4e, RemoveAppMenuItem(a0))

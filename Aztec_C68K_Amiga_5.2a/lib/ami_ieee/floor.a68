@@ -1,0 +1,9 @@
+; Copyright (C) 1987 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_floor
+_floor:
+	movem.l	4(sp),d0/d1
+	move.l	#_LVOIEEEDPFloor#,-(sp)
+	jmp	amiga_ieee#
+

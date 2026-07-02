@@ -1,0 +1,1131 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     3D Library
+
+                                     version 1.0
+
+
+
+                                  by Steven Ludtke
+
+
+
+                                   January 5, 1990
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      NOTICE
+
+
+
+          The 3d library and all associated software in this distribution
+
+          is Copyright 1990 by Steven J. Ludtke. You have permission to
+
+          use and/or modify this code for any purpose commercial or non-
+
+          commercial with two conditions : I must be given credit in any
+
+          distributed product's documentation, and if any part of this
+
+          package is used in any commercial product (even Shareware) one
+
+          free copy of said software must be sent to me at the following
+
+          address : Steven Ludtke, 406 Yale Cir., Glenwood Springs, CO
+
+          81601; all other royalties are waived. This Copyright notice
+
+          must accompany any distributions of any part of this package,
+
+          and in general, the package should be distributed intact, with
+
+          no modifications. This notice must not be removed from the 3d.c,
+
+          test.c, and cube.c source code in this release.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              Page 2 - January 5, 1990
+
+
+
+
+
+
+
+
+
+
+                                    Introduction
+
+                                ---------------------
+
+                       
+
+            This library represents an attempt to provide the Amiga
+
+          community with a high speed, easy to use 3d display library for
+
+          C programmers. The library uses the transformation matrix
+
+          method, which is the fastest method I know to do 3d
+
+          transformations while still providing relatively intuitive
+
+          rotations. Integer arithmetic is used for speed. Additionally,
+
+          the data is stored in a format that will make it easy to
+
+          optimize the code in assembly language. I wrote the code for
+
+          Aztec C, but I haven't converted anything to assembly language
+
+          yet, so the current version should work with Lattice as well. I
+
+          haven't tested it, but I don't believe I did anything that is
+
+          compiler dependent. 
+
+            The library provides what I consider relatively high speed 3d
+
+          displays. It can rotate and draw roughly 500 lines/second. Once
+
+          I've converted the rotation code to optimized assembly, I expect
+
+          the time required for the calculation portion of the display to
+
+          be reduced by at least a factor of 4. With the Amiga's graphics
+
+          coprocessor, filled polygons can be drawn almost (perhaps 70-
+
+          80%) as fast as the lines.
+
+            Since a number of the parameters used in the library are
+
+          application specific, the 'library' is actually a C source file
+
+          that you include in your program. This is done primarily for
+
+          speed. If some of the parameters were variables rather than
+
+          #defines, the library would run significantly slower. The code
+
+          is relatively small, and it seems unlikely that more than one 3d
+                              Page 3 - January 5, 1990
+          application would be active at one time, so C source seems to me
+
+          to be a reasonable way to go. If anyone has a better idea for
+
+          future versions, I'd love to hear it.
+
+
+
+            Included in this package are the following :
+
+          3d.c     - The actual library code. This file is included in any
+
+                     program you use the 3d routines in. It must appear in
+
+                     the correct place in your program. Read the instr. or
+
+                     look at one of the sample programs for more info. 
+
+          3d.doc   - This file.
+
+          makefile - An Aztec makefile for the two sample programs.
+
+          cube.c   - A sample program that does double buffered animation
+
+                     of a cube moving around. There is a reason it doesn't
+
+                     move very smoothly. Look at the code before you think
+
+                     that's the best the library can do.
+
+          test.c   - A sample program that allows you to display 3d files
+
+                     that are in a standard (non-IFF) format. Several
+
+                     sample files are included. Look at the source for
+
+                     instructions.
+
+          cube.3d  - A cube for use with test.c
+
+          earth.3d - Outline of the earth's continents for use with 
+
+
+
+
+
+                     test.c. It should work pretty well with d3surf().
+
+          rocket.3d- This is an example of a file that won't work
+
+                     correctly with 3dsurf(). 
+
+          lay.3d   - 4 squares to try with test.c
+
+
+
+            The two sample programs were written for Aztec C ver 3.6. As
+
+          far as I know it will work as is with Lattice, but I could be
+
+          wrong. I didn't supply executable for the samples to save a
+
+          little space in the distribution.
+
+            I have tested all the routines fairly well myself, but this
+
+          release is the first time anyone else has had the chance to use
+
+          any of this stuff. I should probably call this version a beta-
+
+          test release, but I won't. If you have any problems or
+
+          suggestions I strongly encourage you to send me a message.
+
+          Besides, knowing that someone actually is using this package
+
+          would give my ego a little boost.
+
+
+
+          I can be contacted via any of the following :
+
+          stevel@tybalt.caltech.edu  (until June 90)
+
+          stevel@citiago.bitnet      (until June 90)
+
+          gluon@theta.caltech.edu
+
+          72335,1537  (compuserve)
+
+          Steve Ludtke, 1-54 Caltech, Pasadena CA 91126   (until June 90)
+
+          Steve Ludtke, 406 Yale Cir, Glen. Spgs. CO 81601 (after that)
+
+
+
+            My current plans for the next version are as follows :
+
+          1. Convert much of the code to assembly for speed.
+
+          2. Perhaps add alternative methods for specifying angles, etc...
+                              Page 4 - January 5, 1990
+          I've heard of some scheme using quaternation (sp?) that's
+
+          supposed to be easier for many applications.
+
+          3. Perhaps I'll try to add some primitive shading routines
+
+          (simple lighting effects).
+
+          4. Anything you suggest ...
+
+
+
+            Please talk to me. I like to get mail. Btw, this code should
+
+          be pretty easy to convert for use on other machines. All you
+
+          really need to change is the actual graphics function calls.
+
+
+
+
+
+            Here's the actual programming info. Info on structures follows
+
+          the function information. I tried to make it as easy to use as
+
+          possible.
+
+
+
+            Before your try to write your own code, you should probably
+
+          look at one of the examples. I'll summarize the basic steps
+
+          here.
+
+            Before you include the 3d.c file, you need to have several
+
+          #define statements in you program. If necessary you can replace
+
+          some of the defines with global variables, but you should avoid
+
+          this as it will slow the program down. The defines you need are
+
+          as follows :
+
+
+
+          #define D3VDIST  5000   <- This is the distance from the
+
+                                     observer to the vanishing point. It
+
+                                     is only used with rotatev().
+
+          #define REZ 1024        <- Since the program uses integer
+
+                                     math, it must use several bits
+
+                                     for fractional calculations. 1024
+
+                                     would give 3 digits of accuracy. This
+
+                                     number needs to be a power of 2 for
+
+                                     upward compatibility. In general it
+
+                                     should be at least as large as the
+
+                                     # of pixels in the display you use.
+
+                                     The larger it is, the smaller your
+
+                                     space for points is. REZ=1024 leaves
+
+                                     you with ~4,000,000 possible values
+
+                                     for 'x','y','z'.
+                              Page 5 - January 5, 1990
+          #define REZB 10         <- This is the number of bits in REZ. It
+
+                                     isn't currently used. It will be in
+
+                                     the next version, so update it.
+
+          #define XCEN 250        <- This is the x coord (in the bitmap)
+
+                                     of the center (x=0) coordinate for 3d
+
+                                     displays.
+
+          #define YCEN 100        <- Same for y coord.
+
+          #define XHI  600        <- This is the highest x value in your
+
+                                     bitmap. Anything above this will be
+
+                                     clipped by the drawing routines.
+
+          #define YHI  180        <- Same for y.
+
+          #define XLO  0          <- Low x clipping value.
+
+          #define YLO  0          <- Low y clipping value.
+
+          #define ASPECT  22/10   <- This is the aspect ratio used to
+
+                                     insurea square coord system on the
+
+                                     screen. 22/10 is correct for 640X200 
+
+                                     mode. Obviously 11/10 should be used
+
+                                     in 320X200 mode.
+
+          #include "3d.c"
+
+
+
+
+
+            Next, you should initialize a VECTOR structure with enough
+
+          free memory for your vertex data. Don't forget to allocate
+
+          memory for 'tx','ty', and 'tz', too. Allocate memory for a LINES
+
+          array as well. Now you can fill in the data in the VECTOR and
+
+          LINES structures. Information on this data appears near the end
+
+          of the documentation. 
+
+            Now set up a window or screen (something with a valid
+
+          RastPort) or two for double buffering. If you intend to use
+
+          d3surf(), call Init3Ras() with one or both RastPorts.
+
+            Now SetDrMd() for all RastPorts. If you don't have color data
+
+          in your LINES structure, also do a SetAPen() and a SetOPen()
+
+          (for surfaces) for all RastPorts.
+
+            Now you can actually display data. setxfm() allows you to set
+
+          the viewpoint for the drawing. rotatev() or rotate() is used to
+
+          actually perform the rotations with or without perspective.
+
+          d3surf() and d3lines() can then be used to render the data in a
+
+          RastPort. 
+
+            When you're all done, don't forget to call Exit3d() if you
+
+          called Init3Ras(). DON'T call it if you only used d3lines().
+
+          Simple huh ??? : )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              Page 6 - January 5, 1990
+
+
+
+
+
+
+
+
+
+
+
+
+          FUNCTION DEFINITIONS :
+
+
+
+          setxfm - Set rotation and translation values for next xform.
+
+
+
+          USAGE :
+
+          setxfm(a1,a1,a3,x,y,z,m,d)
+
+          double a1,a2,a3;
+
+          long x,y,z,m,d;
+
+
+
+          FUNCTION :
+
+              This routine sets transformation matrix values based on the
+
+          parameters you pass it. The actual matrix is a global array,
+
+          however for upward compatibility's sake, you shouldn't access it
+
+          except through this routine.
+
+
+
+          INPUTS :
+
+              The three parameters, 'a1-a3' are rotation angles in radians
+
+          (see the description of rotations following the structure
+
+          definitions). 'x','y','z' are translation parameters. Since
+
+          positional values are integral, the translation values must also
+
+          be integral.
+
+             'n' and 'd' are scaling factors. Since integer arithmetic is
+
+          used, a fraction is used for the scaling factor. 'n' is the
+
+          numerator and 'd' is the denominator of the scaling factor. The
+
+          way this is implemented, it doesn't slow the translations down,
+
+          so if you don't need it just set 'n' and 'd' to 1. It will be
+
+          just like they didn't exist.
+                              Page 7 - January 5, 1990
+
+
+          OUTPUTS :
+
+          None.
+
+          ---------------------------------------
+
+
+
+          rotate - Rotates an array of vectors using the current setxfm()
+
+          vals without perspective.
+
+
+
+          USAGE :
+
+          rotate(v,n)
+
+          VECTOR *v;
+
+          int n;
+
+
+
+          FUNCTION:
+
+          This routine actually performs the translation of a group of
+
+          points in 3-space based on the parameters set by setxfm().
+
+
+
+          INPUTS :
+
+          'v' points to a vector structure which must be initialized with
+
+          pointers to all 6 arrays of size >='n'. The first 'n' vectors
+
+          will be rotated. Note that the 'x','y','z' VECTOR values are
+
+
+
+
+
+          unchanged. These values are transformed, and the results are
+
+          stored in 'tx','ty','tz'. If you wish to transform a subset of
+
+          the points, a separate VECTOR structure pointing to the
+
+          beginning of the subset can be used.
+
+
+
+          OUTPUTS:
+
+          none.
+
+          ---------------------------------------
+
+
+
+          rotatev - Rotates an array of vectors using the current setxfm
+
+          vals with perspective.
+
+
+
+          USAGE :
+
+          rotatev(v,n)
+
+          VECTOR *v;
+
+          int n;
+
+
+
+          FUNCTION:
+
+          This routine actually performs the translation of a group of
+
+          points in 3-space based on the parameters set by setxfm(). The
+
+          only difference between this routine and rotate() is the
+
+          addition of perspective.
+
+
+
+          INPUTS :
+
+          'v' points to a vector structure which must be initialized with
+
+          pointers to all 6 arrays of size >='n'. The first 'n' vectors
+
+          will be rotated. Note that the 'x','y','z' VECTOR values are
+
+          unchanged. These values are transformed, and the results are
+                              Page 8 - January 5, 1990
+          stored in 'tx','ty','tz'. If you wish to transform a subset of
+
+          the points, a separate VECTOR structure pointing to the
+
+          beginning of the subset can be used.
+
+
+
+          OUTPUTS:
+
+          none.
+
+          ---------------------------------------
+
+
+
+          Init3Ras - Sets a rastport up for area fills.
+
+
+
+          USAGE:
+
+          Init3Ras(rp,rp2)
+
+          struct RastPort *rp,*rp2;
+
+
+
+          FUNCTION:
+
+          This routine should be called once for each RastPort to be used
+
+          with d3surf(). If it is called more than once with the same
+
+          RastPort it could cause serious problems. This routine only
+
+          needs to be called if d3surf() is going to be used. If only
+
+          d3lines() is going to be used, you can save some memory by not
+
+          calling this routine.
+
+
+
+
+
+
+
+          INPUTS:
+
+          'rp' and 'rp2' point to RastPorts which will be used with
+
+          d3surf(). d3surf uses area fill operations, so the RastPort it
+
+          uses must be given temporary storage for use in the filling.
+
+          'rp2' should be set to NULL if only one RastPort is to be used.
+
+          If both are passed, they will be assigned the same temporary
+
+          storage area, thus saving a significant amount of memory.
+
+
+
+          OUTPUTS:
+
+          None.
+
+          ---------------------------------------
+
+
+
+          Exit3d - Frees up the memory allocated by Init3Ras.
+
+
+
+          USAGE :
+
+          Exit3d(rp)
+
+          struct RastPort *rp;
+
+
+
+          FUNCTION:
+
+          This routine frees up the memory allocated by Init3Ras().
+
+
+
+          INPUTS:
+
+          'rp' points to a RastPort initialized with Init3Ras(). If 2
+
+          RastPorts were initialized with a SINGLE call to Init3Ras(),
+
+          only ONE of the two should be passed to Exit3d(), and neither
+
+          should be used with area fills again.
+
+            I should explain this in more detail. If two RastPorts are
+                              Page 9 - January 5, 1990
+          initialized with a single Init3Ras() call, both RastPorts will
+
+          point to the same scratch memory area. Exit3d() frees this
+
+          memory up. After you call it for one of the two RastPorts, the
+
+          other one will point to an unallocated area in memory. If a fill
+
+          operation is done at this time, it can cause all sorts of nasty
+
+          problems. Be warned.
+
+
+
+          OUTPUTS:
+
+          None.
+
+          ---------------------------------------
+
+
+
+
+
+          d3lines - Draw a group of lines connecting points in 3 space.
+
+
+
+          USAGE:
+
+          d3lines(vector,line,n,rp)
+
+          VECTOR *vector;
+
+          LINES *line;
+
+          int n;
+
+          struct RastPort *rp;
+
+
+
+          FUNCTION:
+
+          This routine actually draws lines connecting one or more points
+
+          in 3-space. See the information on the VECTOR and LINES
+
+          structures for more info.
+
+
+
+          INPUTS:
+
+          'vector' points to a VECTOR structure with information on the
+
+          points to be used in the line drawing. 'line' points to an array
+
+          of LINES structures which contains a description of how the
+
+          lines are to be drawn. 'n' is the number of elements in the
+
+          array pointed to by 'line'. 'rp' points to the RastPort where
+
+          the lines should be drawn.
+
+
+
+          OUTPUTS:
+
+          none.
+
+          ---------------------------------------
+
+
+
+          d3surf - Draw a group of surfaces in 3 space.
+
+
+                              Page 10 - January 5, 1990
+          USAGE:
+
+          d3lines(vector,line,n,rp)
+
+          VECTOR *vector;
+
+          LINES *line;
+
+          int n;
+
+          struct RastPort *rp;
+
+
+
+          FUNCTION:
+
+          This routine is just like d3lines(), except filled polygons are
+
+          drawn rather than lines. The polygons are sorted before drawing,
+
+          so hidden line removal is accomplished.
+
+
+
+          INPUTS:
+
+          'vector' points to a VECTOR structure with information on the
+
+          points to be used in the surface drawing. 'line' points to an
+
+          array of LINES structures which contains a description of how
+
+          the surfaces are to be drawn. 'n' is the number of elements in
+
+          the array pointed to by line. 'rp' points to the RastPort where
+
+          the surfaces should be drawn.
+
+
+
+          OUTPUTS:  none.
+
+
+
+
+
+          STRUCTURES :
+
+
+
+          VECTOR ->
+
+          long *x,*y,*z;
+
+          long *tx,*ty,*tz;
+
+
+
+            This structure points to the data for all the vertices that
+
+          are transformed. 'x','y','z' are arrays with the untransformed
+
+          vertex information. 'tx','ty','tz' are arrays which contain the
+
+          transformed equivalents of the vertices. 'tx','ty','tz' are
+
+          filled in by rotate() and rotatev(). They must be initialized to
+
+          point to sufficiently large areas of free memory by the user.
+
+            The 'x','y','z' values represent vertical pixels on the
+
+          screen. ie - the point (10,1,10) without perspective would
+
+          appear 10 pixels below and 22 pixels to the right of the defined
+
+          center (using a 22/10) aspect ratio.
+
+          -----------------------------------------
+
+
+
+          LINES ->
+
+          unsigned short l;
+
+          unsigned short nl : 1,nc : 1, nco : 1;
+
+
+
+            For those of you not familiar with the above notation, nl, nc,
+
+          and nco are 1 bit integers allocated within a single unsigned
+
+          short. An array of LINES structures contains the information for
+
+          line/polygon drawing. The fact that 'l' is allocated as a short
+
+          means that you can't have more than 2^16 vertices in any single
+
+          array. Hopefully this won't present any problems.
+                              Page 11 - January 5, 1990
+          The array of LINES should be used as follows :
+
+          'l' contains a vertex number in a VECTOR structure or a color
+
+          (see below).
+
+
+
+          'nl' is set if this vertex is the beginning of a new
+
+          line/polygon.
+
+
+
+          'nc' is set if 'l' represents a new fill color for polygons.
+
+
+
+          'nco' is set if 'l' represents a new outline color for polygons,
+
+          or a new line color for line drawing.
+
+
+
+            If filled shapes are to be drawn, not just lines, be sure that
+
+          each new line represents a new polygon. That is, don't draw two
+
+          filled shapes with one continuous line. This would look fine for
+
+          d3lines(), but would produce strange effects with d3surf().
+
+          Points in filled shapes need not be in the same plane, but think
+
+          carefully before trying this. Some shapes may look strange in
+
+          some perspectives. 
+
+            Color changes with d3lines() may occur anywhere. However,
+
+          color changes used with d3surf() must occur only immediately
+
+
+
+
+
+          after a nl=1 element. This is due to the way hidden line removal
+
+          works. Every nl=1 element is taken to be the beginning of a new
+
+          polygon. These polygons are then sorted so the farthest ones are
+
+          drawn first. Color changes occurring before a nl=1 point will be
+
+          attached to the wrong polygon when they are sorted. Color
+
+          changes in the middle of the shape may not have the desired
+
+          effect (after 1 or more lines have been added).
+
+
+
+          Here is a sample LINES array to make this all more clear :
+
+
+
+              l   nl   nc   nco
+
+          0   0    1    0    0          <- Starts a shape, vertex 0
+
+          1   2    0    0    1          <- Changes to outline color 2
+
+          2   1    0    1    0          <- Changes to filled color 1
+
+          3   1    0    0    0        
+
+          4   2    0    0    0
+
+          5   3    0    0    0 
+
+          6   0    0    0    0          <- Closes the quad., not necessary
+
+                                           for d3surf().
+
+          7   3    0    0    1          <- Changes outline color. This is
+
+                                           fine for d3lines(), but won't
+
+                                           change correctly for d3surf().
+
+          8   4    1    0    0          <- New shape
+
+          9   5    0    0    0
+
+          10  6    0    0    0          <- No color was defined after the
+
+                                           new shape started, so the color
+
+                                           from the last drawn shape will
+
+                                           be used. The shape is not
+                              Page 12 - January 5, 1990
+                                           closed. d3surf() will close the
+
+                                           shape anyway. d3lines won't.
+
+           
+
+            In the above example, 0-6 will draw a quadrilateral in color 2
+
+          if d3lines() is used. It will draw a filled quad., filled with
+
+          color 1 and outlined in color 2, if d3surf() is used.
+
+
+
+
+
+          ROTATIONS, AND HOW THEY'RE DONE
+
+          -------------------------------
+
+            This program uses a very standard scheme for rotating objects
+
+          which is completely general. That is, you can observe your
+
+          'scene' from absolutely any imaginable perspective (within the
+
+          bounds of integer math). 
+
+            The axes are set up as follows :
+
+
+
+               Z|   / Y
+
+                |  /
+
+                | /
+
+                |/
+
+                -------------  
+
+                            X
+
+
+
+           That is, the X axis is the screen x axis, the Z axis is the
+
+          screen y axis, and the Y axis goes positive into the screen.
+
+
+
+            Rotations are defined in terms of three steps. 'a1' defines a
+
+          rotation angle from the X axis in the X-Y plane. 'a2' then
+
+          rotates the specified number of radians away from the Z axis in
+
+          the Y-Z plane. Finally 'a3' defines a rotation in radians from
+
+          the new (rotated) X axis in the new X-Y plane. 
+
+            Explained another way : Say the ground is in the X-Y plane, ie
+
+          going into the screen. 'a1' would spin an object resting on the
+
+          ground as if it were a top. 'a2' would cause this rotated object
+
+          to tilt on the screen, just like the Aster*ids spaceship spins.
+
+          'a3' would take the tilted object and spin it along the tilted
+                              Page 13 - January 5, 1990
+          plane. a3 is a bit hard to picture, play with it.
+
+            I know this is somewhat complex, but you can do any possible
+
+          rotation with it once you get the hang of it. It may also be
+
+          easier to visualize if you picture the observer moving, rather
+
+          than the object being rotated. I may try to add a few other
+
+          schemes in the next version. We'll see what I can find.
+
+            For those of you who are interested you can see how this
+
+          transformation works in "Classical Mechanics" by Goldstein on
+
+          page 146. (What can I say, I'm a physics major.)
+
+
+
+          ---------
+
+
+
+            Again, if you run into any bugs or problems please let me
+
+          know. Also keep in mind that, while you may feel free to modify
+
+          this code, you might have compatibility problems if you do. I
+
+          tried to comment the code as well as possible for those of you
+
+          who feel like making changes. Have fun !!!

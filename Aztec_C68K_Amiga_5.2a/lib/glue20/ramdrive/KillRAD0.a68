@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_RamdriveDevice
+	xdef	_KillRAD0
+_KillRAD0:
+	move.l	a6,-(sp)
+	move.l	_RamdriveDevice,a6
+	jsr	-42(a6)
+	move.l	(sp)+,a6
+	rts

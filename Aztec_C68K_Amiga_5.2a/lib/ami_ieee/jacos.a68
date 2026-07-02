@@ -1,0 +1,22 @@
+; Copyright (C) 1987 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_acos
+_acos:
+	movem.l	4(sp),d0/d1
+	move.m	d2/d3,-(sp)
+	move.l	#0,d3
+	move.l	#$3ff00000,d2
+	jsr	.Pcmp#
+	move.m	(sp)+,d2/d3
+	ble	inputok
+	sub.l	d0,d0
+	sub.l	d1,d1
+	rts
+inputok:
+
+	move.l	8(sp),d1
+	move.l	4(sp),d0
+	move.l	#_LVOIEEEDPAcos#,a0
+	jmp	amiga_ieee_trans#
+

@@ -1,0 +1,44 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOOBSOLETEGetWBObject		equ	 -30  
+_LVOOBSOLETEPutWBObject		equ	 -36  
+_LVOGetIcon			equ	 -42  
+_LVOPutIcon			equ	 -48  
+_LVOFreeFreeList		equ	 -54  
+_LVOOBSOLETEFreeWBObject	equ	 -60  
+_LVOOBSOLETEAllocWBObject	equ	 -66  
+_LVOAddFreeList			equ	 -72  
+_LVOGetDiskObject		equ	 -78  
+_LVOPutDiskObject		equ	 -84  
+_LVOFreeDiskObject		equ	 -90  
+_LVOFindToolType		equ	 -96  
+_LVOMatchToolValue		equ	 -102  
+_LVOBumpRevision		equ	 -108  
+_LVOFreeAlloc			equ	 -114  
+_LVOGetDefDiskObject		equ	 -120  
+_LVOPutDefDiskObject		equ	 -126  
+_LVOGetDiskObjectNew		equ	 -132  
+_LVODeleteDiskObject		equ	 -138	;jd 8/29/91 new
+
+
+
+	public	_LVOOBSOLETEGetWBObject
+	public	_LVOOBSOLETEPutWBObject
+	public	_LVOGetIcon
+	public	_LVOPutIcon
+	public	_LVOFreeFreeList
+	public	_LVOOBSOLETEFreeWBObject
+	public	_LVOOBSOLETEAllocWBObject
+	public	_LVOAddFreeList
+	public	_LVOGetDiskObject
+	public	_LVOPutDiskObject
+	public	_LVOFreeDiskObject
+	public	_LVOFindToolType
+	public	_LVOMatchToolValue
+	public	_LVOBumpRevision
+	public	_LVOFreeAlloc
+	public	_LVOGetDefDiskObject
+	public	_LVOPutDefDiskObject
+	public	_LVOGetDiskObjectNew
+	public	_LVODeleteDiskObject	;jd 8/29/91 new

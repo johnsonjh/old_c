@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_Permit
+_Permit:
+	move.l	a6,-(sp)
+	move.l	_SysBase,a6
+	jsr	-138(a6)
+	move.l	(sp)+,a6
+	rts

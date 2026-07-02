@@ -1,0 +1,16 @@
+CC=cc
+AS=as
+CFLAGS=
+AFLAGS=
+O=oss
+
+.a68.$O:
+	$(AS) -o $@ $(AFLAGS) $*.a68
+
+CLIB=\
+	IEEEDPAb.$O IEEEDPAd.$O IEEEDPCe.$O IEEEDPCm.$O IEEEDPDi.$O \
+	IEEEDPF1.$O IEEEDPFi.$O IEEEDPFl.$O IEEEDPMu.$O IEEEDPNe.$O \
+	IEEEDPSu.$O IEEEDPTs.$O
+
+clib:	$(CLIB)
+

@@ -1,0 +1,14 @@
+;:ts=8
+
+; jd 8/28/91 new. 
+; LayoutMenuItems is glue only, not an entry in gadtools.library
+	xref	_GadToolsBase
+	xdef	_LayoutMenuItems
+_LayoutMenuItems:
+	movem.l	a6/a2,-(sp)
+	move.l	_GadToolsBase,a6
+	lea	12(sp),a2
+	movem.l	(a2)+,a0-a1
+	jsr	-60(a6)			;LayoutMenuItemsA
+	movem.l	(sp)+,a6/a2
+	rts

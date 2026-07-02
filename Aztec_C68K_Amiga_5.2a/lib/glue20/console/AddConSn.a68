@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_ConsoleDevice
+	xdef	_AddConSnipHook
+_AddConSnipHook:
+	move.l	a6,-(sp)
+	move.l	_ConsoleDevice,a6
+	move.l	8(sp),a0
+	jsr	-66(a6)
+	move.l	(sp)+,a6
+	rts

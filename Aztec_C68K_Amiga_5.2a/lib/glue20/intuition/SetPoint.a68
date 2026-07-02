@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_SetPointer
+_SetPointer:
+	movem.l	a6/d2/d3,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	16(sp),a0/a1
+	movem.l	24(sp),d0/d1/d2/d3
+	jsr	-270(a6)
+	movem.l	(sp)+,a6/d2/d3
+	rts

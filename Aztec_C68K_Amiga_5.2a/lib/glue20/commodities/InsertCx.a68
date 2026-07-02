@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_CxBase
+	xdef	_InsertCxObj
+_InsertCxObj:
+	movem.l	a6/a2,-(sp)
+	move.l	_CxBase,a6
+	movem.l	12(sp),a0/a1/a2
+	jsr	-96(a6)
+	movem.l	(sp)+,a6/a2
+	rts

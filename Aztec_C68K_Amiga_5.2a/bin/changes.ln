@@ -1,0 +1,22 @@
+LMAIN.C/nextarg()
+	until C86 is ansi, an argument file on 8086 must be read with agetc()
+	created a macro GETC for this
+7/8/91
+	merged in mac changes
+
+7/20/91
+	linker didn't report an error when an overlay's initialized data 
+	contained a pointer to an overlay function. For example, the linker
+	should report an error if the following code is in an overlay:
+	  void ov(void){}
+	  void (*fp)(void)=ov;
+
+8/16/91
+	findsym() was assuming a string list entry was a symbol, and indirecting
+	off its sg_sym pointer. This caused enforcer hits on the amiga when program
+	was linked with debugging info turned on.
+	Added check to make sure it is a symbol.
+
+8/21/91
+	when linking in amiga object modules, linker was generating 
+	incorrect 32-bit code-to-data relocation records 

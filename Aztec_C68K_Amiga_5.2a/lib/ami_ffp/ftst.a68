@@ -1,0 +1,8 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	.Ftst
+.Ftst:
+	move.l	#_LVOSPTst#,-(sp)
+	jmp	amiga_ffp#
+

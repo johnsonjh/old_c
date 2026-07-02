@@ -1,0 +1,22 @@
+;:ts=8
+;
+;	modf(d, dptr)
+;		returns fractional part of d, and
+;		stores integral part into *dptr
+;
+	public	.Ffix
+	public	.Fflt
+	public	.Fsub
+
+	public	_modf
+_modf
+	move.l	4(sp),d0
+	jsr	.Ffix
+	jsr	.Fflt
+	move.l	12(sp),a0
+	move.l	d0,(a0)+
+	clr.l	(a0)
+	move.l	d0,d1
+	move.l	4(sp),d0
+	jmp	.Fsub
+;

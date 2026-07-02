@@ -1,0 +1,333 @@
+;:ts=8
+; Copyright (C) 1986,1987 by Manx Software Systems, Inc.
+; Modified August 29, 1991 - Rene Vega
+;
+;
+;
+; In this version, segload() returns a BOOL indicating if it was successful
+; in loading the specified segment. The .segload() entry occurs from implicit
+; calls such as a function call to a yet to be loaded segment. In this case, if
+; the segment cannot be loaded, an alert is generated asking either for a retry
+; attempt or program termination.
+;
+;
+
+TRUE		 equ	 1
+FALSE		 equ	 0
+
+_LVOAlert	 equ	 -108
+_LVOOpenLibrary  equ	 -552
+_LVOCloseLibrary equ	 -414
+_LVOSeek	 equ	 -66
+_LVOLoadSeg	 equ	 -150
+_LVODisplayAlert equ	 -90
+_LVOFindTask	 equ	 -294
+ln_Name 	 equ	 10
+
+RECOVERY_ALERT	 equ	 $00000000
+DEADEND_ALERT	 equ	 $80000000
+NAMESIZE	 equ	 59	    ; Must be an odd number!!
+
+	public	 _exit
+	public	 __argc
+	public	 __argv
+
+;
+;	Register usage:
+;			D3 - segment number
+;			D2 - number of symbols in hunk
+;			D1 - hunk address
+
+;			A4 - pointer to loader data table
+;			A3 - pointer to segment data table
+;			A2 - pointer to hunk data table
+;			A1 - pointer to segment Jmptab
+;
+
+	far	code
+	far	data
+
+;
+;	segload(PVF func)
+;
+;	Note: In large code models, it is possible that the function pointer
+;	will point directly to the function rather than the jump table entry
+;	if said function resides in the same code segment as the caller to
+;	segload. The entry code in segload verifies that the pointer is indeed
+;	a jump table address before proceeding to perform the segment load.
+;
+	public	_segload		;this entry is for forcing
+_segload				; a segment in from C
+	movem.l d0-d4/a0-a4,-(sp)
+	move.l	#0,d3			;Indicate this is segload().
+	move.l	44(sp),a1               ;func ptr is really a jump table address
+	cmp.w	#$4ef9,(a1)             ;see if already loaded (jmp installed)
+	beq	done			;Yes, so return
+	cmp.b	#$61,(a1)               ;Is this an unloaded entry? (bsr)
+	bne	done			;No, treat as done (direct pointer).
+
+;
+;	Looks like a jump table entry.
+;
+	add.w	#4,a1			;Skip to seg #
+	bra	entry2			;and go to common code
+
+
+;
+;	Implicit load of a segment containing to be called function.
+;
+	public	.segload
+.segload
+	movem.l d0-d4/a0-a4,-(sp)
+	move.l	40(sp),a0               ;get return address
+	move.l	a0,a1			;make a copy
+	sub.w	#4,a0			;back up to bsr
+	move.l	a0,d3			;Save for later insertion.
+
+entry2:
+	move.l	#0,d0			;clear high bits
+	move.b	(a1),d0                 ;get segment number
+	move.l	d0,d4			; save it.
+	move.l	#__H0_org#+8,a4 	;point to loader table
+	move.l	4(a4),a3                ;point to segment data table
+	add.w	#4,a3			;skip count
+	move.l	a3,a2			;save table start
+	sub.w	#1,d0			;sub 1 since 0 never in table
+	asl.w	#3,d0			;multiply by 8
+	add.w	d0,a3			;point to segment data
+
+;------- get the segment into memory
+
+retry:
+	jsr	loadseg 		;load the segment
+	tst.l	d0			;Did it work?
+	beq	loaderr 		;NO, oh dear...
+
+;------- adjust the segment jump table
+
+	move.l	#__H1_org#,a1		;get data hunk
+	add.w	4(a3),a1                ;add in table offset
+	add.w	6(a3),a2                ;add hunk data offset
+loop:
+	move.w	(a2)+,d0                ;get hunk number
+	beq	done			;all done
+	move.w	(a2)+,d2                ;get number of symbols
+	beq	loop			;no symbols, skip
+	move.l	8(a4),a0                ;BPTR to Hunk table
+	add.l	a0,a0			;double it
+	add.l	a0,a0			;and again
+	add.l	d0,d0			;double hunk number
+	add.l	d0,d0			;and again
+	move.l	(a0,d0),d1              ;get hunk BPTR
+	add.l	#1,d1			;point at real start
+	add.l	d1,d1			;convert to real pointer
+	add.l	d1,d1			;and again
+
+1$:
+	move.w	2(a1),a0                ;save bsr offset for unloadseg
+	clr.b	4(a1)                   ;clear high byte
+	move.l	4(a1),d0                ;get offset
+	add.l	d1,d0			;relocate it
+	move.w	#$4ef9,(a1)+            ;jmp absolute long
+	move.l	d0,(a1)+                ;put it back
+	move.w	a0,(a1)+                ;save bsr offset
+	sub.w	#1,d2			;dec number of symbols
+	bne	1$			;go back
+
+	bra	loop			;do next hunk
+
+
+done:
+	tst.l	d3			;Is this a segload() call?
+	beq	doneS			;Yes, set up rc.
+	move.l	d3,40(sp)               ;Place back for rts
+	movem.l (sp)+,d0-d4/a0-a4       ;restore regs
+	rts				;and do the real function call
+
+doneS:
+	movem.l (sp)+,d0-d4/a0-a4       ;restore regs
+	moveq.l #TRUE,d0		;Indicate load was successful.
+	rts				;Return from segload().
+
+
+;
+; The segment didn't load. If it's a segload() call, set the return value to
+; FALSE. Otherwise, put up an alert.
+;
+loaderr:
+	tst.l	d3			;First, is this a segload() call?
+	bne	alert			;No, put up an alert.
+	movem.l (sp)+,d0-d4/a0-a4       ;restore regs
+	moveq.l #FALSE,d0		;Indicate load failed.
+	rts				;Return from segload().
+
+
+alert:
+
+;
+; We need the intuition library opened.
+;
+	lea	intuiname(pc),a1        ;get library name
+	move.l	#0,d0			;any version
+	move.l	4,a6			;get ExecBase
+	jsr	_LVOOpenLibrary(a6)     ;open the library
+	move.l	d0,a6			;set up for later call
+	beq	nointui 		;whoops, give up quickly!
+
+;
+; Place the segment number in the alert text.
+;
+	lea	OopsSeg(pc),a0          ; Segment number area in message.
+	move.l	#2,d2			; Loop count.
+cvx:	divs	#10,d4			; rrrrqqqq
+	swap	d4			; qqqqrrrr  (rrrr = 0-9)
+	add.w	#'0',d4
+	move.b	d4,0(a0,d2.w)           ; Move into message area.
+	lsr.l	#8,d4			; 00qqqqrr
+	lsr.l	#8,d4			; 0000qqqq
+	dbf	d2,cvx
+
+
+;
+; Copy the program name from argv[0] into the alert text of this is a CLI.
+; Otherwise, the program was launched by Workbench, and so we use the task name.
+;
+	move.l	__argv,a0		; --> argv[]
+	move.l	(a0),a0                 ; --> argv[0]
+	move.l	__argc,d0		; Via CLI?
+	bne	0$			; Yes, use argv[0].
+
+	move.l	a6,-(sp)                ; Save intui pointer.
+	move.l #0,a1
+	move.l	4,a6			; ExecBase
+	jsr	_LVOFindTask(a6)
+	move.l	d0,a0
+	move.l	ln_Name(a0),a0          ; Now have task name.
+	move.l	(sp)+,a6                ; Restore intui pointer.
+0$:
+
+	lea	OopsPgm(PC),a1
+	moveq.l #NAMESIZE-1,d0		;
+1$:	move.b	(a0)+,(a1)+             ;strncpy()
+	dbeq	d0,1$			;
+
+	tst.w	d0			;
+	bmi	3$			;strpad()
+	subq.l	#1,a1			;
+2$:	move.b	#' ',(a1)+              ;
+	dbf	d0,2$
+3$:
+
+;
+; Generate the alert
+;
+	move.l	#RECOVERY_ALERT,d0	;A choice on this one.
+	lea	OopsMsg(pc),a0          ;The bad news.
+	moveq.l #70,d1			;Alert height.
+	jsr	_LVODisplayAlert(a6)    ;call alert code
+	move.l	d0,d2
+
+;
+; Close the intuition library.
+;
+	move.l	a6,a1			;Intui pointer.
+	move.l	4,a6			;get ExecBase
+	jsr	_LVOCloseLibrary(a6)    ;Close the library
+
+
+	tst.l	d2			;User asks to retry?
+	bne	retry			;Yes, try again - It might work.
+
+
+nointui:
+	movem.l (sp)+,d0-d4/a0-a4       ;restore regs
+	move.l	#9999,-(sp)             ; Exit code.
+	jmp	_exit			;Force a controlled termination.
+
+
+;
+; Routine to load a segment. Returns D0=0-Failed, 1-Worked
+;
+loadseg:
+	movem.l d0/d2/d3/a6,-(sp)       ;save our regs
+	lea	dosname(pc),a1          ;get dos library name
+	move.l	#0,d0			;any version
+	move.l	4,a6			;get ExecBase
+	jsr	_LVOOpenLibrary(a6)     ;open the library
+	move.l	d0,a6			;set up for later call
+	move.l	d0,d2			;save it
+	beq	loadNO			;whoops, give up quickly!
+
+	move.l	(a4),d1                 ;get program file descriptor
+	move.l	(a3),d2                 ;get file offset
+	move.l	#-1,d3			;offset from beginning
+	jsr	_LVOSeek(a6)            ;seek to file pos
+	tst.l	d1			;check return
+	bmi	loadNO			;error, failsoft analysis.
+
+	move.l	#0,d1			;special param for LoadSeg
+	move.l	8(a4),d2                ;hunk tab BPTR
+	move.l	(a4),d3                 ;program file descriptor
+	jsr	_LVOLoadSeg(a6)         ;load this segment
+	tst.l	d1			;check return
+	beq	loadNO			;error, failsoft analysis.
+
+	move.l	8(a4),a0                ;get BPTR to hunk table
+1$:
+	add.l	a0,a0
+	add.l	a0,a0			;convert to pointer
+2$:
+	tst.l	(a0)                    ;check for end
+	beq	3$			;found it
+	move.l	(a0),a0                 ;get next hunk
+	bra	1$
+3$:
+	move.l	d0,(a0)                 ;add new list to seglist
+
+	moveq.l #TRUE,d0		;say it worked.
+	bra	loadend 		;and return
+
+loadNO:
+	moveq.l #FALSE,d0
+
+loadend:
+	move.l	d0,(sp)
+	move.l	a6,a1			;Dos pointer.
+	move.l	4,a6			;get ExecBase
+	jsr	_LVOCloseLibrary(a6)    ;Close the library
+
+	movem.l (sp)+,d0/d2/d3/a6       ;restore regs.
+	rts				;and return
+
+dosname:   dc.b  'dos.library',0
+intuiname: dc.b  'intuition.library',0
+
+;
+; Stuff for DisplayAlert()
+; Quirky subtlety is that the length of the character strings (excluding the
+; trailing NULL byte) must be odd.
+;
+OopsMsg dc.w	10
+	dc.b	10
+	dc.b	'Segmented program load failure in: ',0,1
+
+	dc.w	10
+	dc.b	20
+OopsPgm dcb.b	NAMESIZE,' '         ;room for the program name
+	dc.b	0,1
+
+	dc.w	10
+	dc.b	40
+	dc.b	'A function call failed because segment #'
+OopsSeg dc.b	'999'
+	dc.b	' could not not be loaded. ',0,1
+
+	dc.w	10
+	dc.b	50
+	dc.b	'Press either: the LEFT mouse button to RETRY or',0,1
+
+	dc.w	10
+	dc.b	60
+	dc.b	'              the RIGHT button to TERMINATE the program. ',0,0
+
+	end

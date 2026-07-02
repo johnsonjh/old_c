@@ -1,0 +1,16 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+_LVOAllocFileRequest  		equ		-30
+_LVOFreeFileRequest  		equ		-36  
+_LVORequestFile 		equ		-42  
+_LVOAllocAslRequest  		equ		-48
+_LVOFreeAslRequest  		equ		-54
+_LVOAslRequest  		equ		-60
+
+	public	_LVOAllocFileRequest
+	public	_LVOFreeFileRequest
+	public	_LVORequestFile
+	public	_LVOAllocAslRequest
+	public	_LVOFreeAslRequest
+	public	_LVOAslRequest

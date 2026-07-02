@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_PointInImage
+_PointInImage:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	8(sp),d0/a0
+	jsr	-624(a6)
+	move.l	(sp)+,a6
+	rts

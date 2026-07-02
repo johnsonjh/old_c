@@ -1,0 +1,15 @@
+;:ts=8
+; jd 8/28/91 new
+; AllocDosObjectTags is in amiga.lib not dos.library
+
+	xref	_DOSBase
+	xdef	_AllocDosObjectTags
+_AllocDosObjectTags:
+	movem.l	d2/a6,-(sp)
+	move.l	_DOSBase,a6
+	pea	16(sp)
+	move.l	(sp)+,d2
+	move.l	12(sp),d1
+	jsr	-228(a6)		;AllocDosObject
+	movem.l	(sp)+,d2/a6
+	rts

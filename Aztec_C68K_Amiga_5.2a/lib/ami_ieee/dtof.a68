@@ -1,0 +1,13 @@
+; Copyright (C) 1987 by Manx Software Systems, Inc.
+; :ts=8
+
+		public	.dtof
+.dtof:
+	movem.l	a0/a1,-(sp)
+	movem.l	d0/d1,-(sp)
+	move.l	#_LVOIEEEDPTieee#,a0
+	jsr	amiga_ieee_trans#
+	add.w	#8,sp
+	movem.l	(sp)+,a0/a1
+	rts
+

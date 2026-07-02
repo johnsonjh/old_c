@@ -1,0 +1,10 @@
+; Copyright (C) 1987 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_sqrt
+_sqrt:
+	move.l	8(sp),d1
+	move.l	4(sp),d0
+	move.l	#_LVOIEEEDPSqrt#,a0
+	jmp	amiga_ieee_trans#
+

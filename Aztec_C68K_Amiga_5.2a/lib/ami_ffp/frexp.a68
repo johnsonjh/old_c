@@ -1,0 +1,22 @@
+; :ts=8
+; for ffp, compiler outputs 8 bytes for double args, even though doubles
+; are actually only 4 bytes. if the compiler is changed to fix this,
+; the following equate must be changed to 8:
+INTOFF	equ	12
+	public	_frexp
+_frexp:
+	move.l	4(sp),d0	;get float
+	move.l	INTOFF(sp),a0	;get addr of int
+	sub.l	d1,d1		;clear exponent register
+	move.b	d0,d1		;get exponent+$40
+	and.b	#$7f,d1		;turn off sign bit
+	sub.l	#$40,d1		;get exponent
+	if	INT32
+	move.l	d1,(a0)
+	else
+	move.w	d1,(a0)
+	endc
+	and.b	#$80,d0		;turn off mantissa exponent bits
+	or.b	#$40,d0		;set exponent for return value
+	rts
+

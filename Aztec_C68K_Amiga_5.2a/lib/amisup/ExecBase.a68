@@ -1,0 +1,5 @@
+; Copyright 1991 Manx Software Systems, Inc
+; :ts=8
+
+_AbsExecBase	equ		4
+				public	_AbsExecBase

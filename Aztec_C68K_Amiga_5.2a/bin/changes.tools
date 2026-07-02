@@ -1,0 +1,7 @@
+mapfd 9/30/91
+	Added -4 and -5 options to create pragmas for functions that
+	take args in A4 and A5. By default, pragmas are not created for
+	such functions.
+
+	Fixed mapfd to correctly create pragmas for functions that
+	take more than 6 arguments 

@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_ExecReserved03
+_ExecReserved03:
+	move.l	a6,-(sp)
+	move.l	_SysBase,a6
+	move.l	8(sp),d0
+	jsr	-780(a6)
+	move.l	(sp)+,a6
+	rts

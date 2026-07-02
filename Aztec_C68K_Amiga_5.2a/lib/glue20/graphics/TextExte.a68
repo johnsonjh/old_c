@@ -1,0 +1,13 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_TextExtent
+_TextExtent:
+	movem.l	a6/a2,-(sp)
+	move.l	_GfxBase,a6
+	move.l	12(sp),a1
+	move.l	16(sp),a0
+	movem.l	20(sp),d0/a2
+	jsr	-690(a6)
+	movem.l	(sp)+,a6/a2
+	rts

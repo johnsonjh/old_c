@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_LockLayerRom
+_LockLayerRom:
+	movem.l	a6/a5,-(sp)
+	move.l	_GfxBase,a6
+	move.l	12(sp),a5
+	jsr	-432(a6)
+	movem.l	(sp)+,a6/a5
+	rts

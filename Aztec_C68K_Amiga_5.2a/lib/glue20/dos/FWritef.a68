@@ -1,0 +1,15 @@
+;:ts=8
+; jd 8/24/91 new
+; FWritef is in amiga.lib, not dos.library
+
+	xref	_DOSBase
+	xdef	_FWritef
+_FWritef:
+	movem.l	a6/d2-d3,-(sp)
+	move.l	_DOSBase,a6
+	pea	24(a7)
+	move.l	(sp)+,d3
+	movem.l	16(sp),d1-d2
+	jsr	-348(a6)		;VFWritef
+	movem.l	(sp)+,a6/d2-d3
+	rts

@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_OpenWorkBench
+_OpenWorkBench:
+	move.l	a6,-(sp)
+	move.l	_IntuitionBase,a6
+	jsr	-210(a6)
+	move.l	(sp)+,a6
+	rts

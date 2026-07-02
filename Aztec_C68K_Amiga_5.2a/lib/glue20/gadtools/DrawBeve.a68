@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_GadToolsBase
+	xdef	_DrawBevelBoxA
+_DrawBevelBoxA:
+	movem.l	a6/d2/d3,-(sp)
+	move.l	_GadToolsBase,a6
+	move.l	16(sp),a0
+	movem.l	20(sp),d0/d1/d2/d3/a1
+	jsr	-120(a6)
+	movem.l	(sp)+,a6/d2/d3
+	rts

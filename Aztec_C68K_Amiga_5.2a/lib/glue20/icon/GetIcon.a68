@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_IconBase
+	xdef	_GetIcon
+_GetIcon:
+	movem.l	a6/a2,-(sp)
+	move.l	_IconBase,a6
+	movem.l	12(sp),a0/a1/a2
+	jsr	-42(a6)
+	movem.l	(sp)+,a6/a2
+	rts

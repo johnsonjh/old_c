@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_WorkbenchBase
+	xdef	_RemoveAppIcon
+_RemoveAppIcon:
+	move.l	a6,-(sp)
+	move.l	_WorkbenchBase,a6
+	move.l	8(sp),a0
+	jsr	-66(a6)
+	move.l	(sp)+,a6
+	rts

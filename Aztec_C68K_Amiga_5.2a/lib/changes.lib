@@ -1,0 +1,313 @@
+amisup/lvodos.a68 *jd 12/4/90:
+	changed all equate values from positive to negative
+
+stdio/format.c *jd 12/10/90:
+	changed rounding array used by ldtoa to add another element.
+	and changed ldtoa to correct rounding bug. (bug3.c)
+
+	moved last 'if' statement in ldtoa to correct 0 truncation bug in
+	'g' conversion. (bug7.c)
+
+LIBSCR 1: jd 4/29/91 misc/setlocal.c:
+	changed setlocale so that its second arg can be null to fetch
+	current locale
+
+LIBSCR 2: jd 5/9/91 sysio/fexec.c:
+	_doexec was trashing d2, but that was being used as a register var by
+	fexecv when optimizing was used.
+
+glue20/asl/#?
+	Bug fixes:
+		glue for AllocAslRequest was popping args into the wrong regs
+		and calling the wrong offset into asl.library
+
+		glue for AslRequest was calling the wrong offset into asl.library
+
+		glue for FreeAslRequest was calling the wrong offset into asl.library
+
+	Created glue for amiga.lib-only routines:
+		AllocAslRequestTags
+		AslRequestTags
+
+	Deleted glue for obsolete asl.library routines:
+		AddDlistItems, AllocFontRequest, CreateDList, DrawDList,
+		EmptyDList, FreeDList, FreeFontRequest, GetDListInfo,
+		HandleDListEvent, RefreshDListProp, RefreshDList, RequestFont,
+		ScrollDListAbs, ScrollDList
+
+	inp/c#?.inp
+		made changes to glue20/asl entries for above reasons
+
+amisup/lvoasl.a68
+	deleted entries for obsolete asl.library routines:
+		AddDlistItems, AllocFontRequest, CreateDList, DrawDList,
+		EmptyDList, FreeDList, FreeFontRequest, GetDListInfo,
+		HandleDListEvent, RefreshDListProp, RefreshDList, RequestFont,
+		ScrollDListAbs, ScrollDList
+
+glue20/battclock/#?	8/28/91
+	Deleted glue for private battclock.library routines:
+		ReadBattClockMem
+		WriteBattClockMem
+
+glue20/commodities/#? 8/28/91
+	Deleted glue for private commodities.library routines:
+		FindBroker
+		FreeBrokerList
+		CopyBrokerList
+		BrokerCommand
+
+glue20/console/#? 8/28/91
+	Deleted glue for private console.device routines:
+		AddConSn
+		GetConSn
+		RemConSn
+		SetConSn
+
+glue20/diskfont/#?	8/15/91
+	deleted duplicate and bad copies of diskfont source modules
+	changed glue20/diskfont/makefile and inp/c#?.inp to support 
+	these changes.
+
+amisup/lvoexec.a68	8/21/91
+	changed	LVOSetFunction8 to LVOAttemptSemaphoreShared
+	added	LVOCachePreDMA
+	added	LVOCachePostDMA
+	deleted	LVOExecReserved00
+	changed	LVOExecReserved01
+	changed	LVOExecReserved02
+	added	LVOExecReserved03
+	added	LVOExecReserved04
+
+glue20/exec/#?	8/21/91
+	replaced SetFunction() (SetFunc1.a68) with AttemptSemaphoreShared 
+		(AttSemSh.a68)
+	Added CachePreDMA (CachePre.a68)
+	Added CachePostDMA (CachePos.a68)
+	Deleted all private functions:
+		ExitIntr 
+		Schedule
+		Reschedule
+		Switch
+		Dispatch
+		Exception
+		RawIOInit
+		RawMayGetChar
+		RawPutChar
+		ExecReserved00, 01, 02, 03
+	Updated glue20/exec/makefile and c*.inp for these changes
+
+glue20/expansion/#?	8/28/91
+	Deleted glue for private expansion.library routines:
+		ExpansionReserved26
+		WriteExpansionWord
+
+amisup/lvodos.a68	8/24/91
+	added new entries:
+		DosGetString 		-978
+		DosNameFromAnchor	-852
+		MatchPatternNoCase	-972
+		ParsePatternNoCase	-966
+		SameDevice			-984
+		SystemTagList		-606
+	deleted obsolete (?) entries:
+		Requester			-486
+
+glue20/dos/#?	8/24/91
+	Added new entry points for amiga.lib-only routines to existing routines:
+		AllocDosObjectTagList entry point to AllocDosObject
+		CreateNewProcTagList entry point to CreateNewProc
+		NewLoadSegTagList entry point to NewLoadSeg
+		SystemTagList entry point to System
+
+	Created glue for new dos.library routines:
+		MatchPatternNoCase
+		ParsePatternNoCase
+		SameDevice
+
+
+	Created glue for amiga.lib-only routines:
+		AllocDosObjectTags
+		CreateNewProcTags
+		DoPkt0, 1, 2, 3, 4
+		FPrintf
+		FWritef
+		NewLoadSegTags
+		Printf
+		SystemTags
+
+	Deleted glue for:
+		ClearVec (Private routine)
+		NoReqLoadSeg (Private routine)
+		Requester (obsolete)
+	Fixed glue for:
+		DoPkt (wasn't loading d7)
+
+
+glue20/gadtools/#?	8/29/91
+	Created new glue for these amiga.lib-only routines:
+		CreateGadget
+		CreateMenus
+		DrawBevelBox
+		GetVisualInfo
+		GT_SetGadgetAttrs
+		LayoutMenuItems
+		LayoutMenus
+	Deleted glue routines for these private routines:
+		GTReserved0-5
+	Deleted obsolete glue:
+		GTReserved
+
+glue20/graphics/#? 8/29/91
+	Deleted glue for private graphics.library routines:
+		AddDisplayInfo
+		AddDisplayInfoData
+		SetDisplayInfoData
+
+glue20/icon/#?	8/28/91
+	Deleted glue for private icon.library routines:
+		FreeAlloc
+		OBSOLETEAllocWBObject
+		OBSOLETEFreeWBObject
+		OBSOLETEGetWBObject
+		OBSOLETEPutWBObject
+
+amisup/lvointui.a68		8/28/91
+	Changed LVOReportMouse1 to LVOReportMouse
+
+glue20/intuition		8/28/91
+	Deleted the following private intuition.library routines:
+		FindClass
+		lockPubClass
+		unlockPubClass
+		SetIPrefs
+	Created glue for the following routines which are in amiga.lib but
+	not in intuition.library:
+		BuildEasyRequest
+		EasyRequest
+		NewObject
+		OpenScreenTags
+		OpenWindowTags
+		ReportMouse1
+		SetAttrs
+		SetGadgetAttrs
+
+glue20/wb/#?	8/28/91
+	Created glue for amiga.lib-only routines:
+		AddAppIcon
+		AddAppMenuItem
+		AddAppWindow
+
+	Deleted glue for private wb.library routines:
+		StartWorkbench
+
+amisup/lvowb.a68	8/28/91
+	Added entries for new wb.library routines:
+		UpdateWorkbench
+		QuoteWorkbench
+amisup/lvoutili.a68		8/28/91
+	Added LVO's for new utility.lib routines:
+		_LVOStricmp
+		_LVOStrnicmp
+		_LVOToUpper
+		_LVOToLower
+
+glue20/utility/#?		8/28/91
+	Added glue for new utility.lib routines:
+		Stricmp
+		Strnicmp
+		ToUpper
+		ToLower
+
+amisup/lvopotlu.a68		8/29/91
+	Deleted amisup/lvopotlu from c.lib, because it's lvo's are
+	in other lvo files.
+
+inp/c#?.inp				9/5/91
+	There were different glue routines for AllocMiscResource and 
+	FreeMiscResource in glue20/misc and amisup subdirectories, and both
+	versions were in the c libraries. The glue20/misc routines followed
+	C='s glue routines, which were incorrect. The amisup routines, which
+	according to C= are correct, assume that the value that's to be loaded
+	into A6 is passed in as the first argument.
+	 The glue20/misc routines were removed from c#?.lib
+
+scr/#?	9/10/91
+	Modified all the scr_... functions for 5.0 compatibility
+	(i.e. prototypes)
+
+scr/scr_curs.c	9/10/91
+	Modified scr_curs() to call write, not printf, to avoid mixing
+	buffered and unbuffered i/o
+
+scr/scr_tab.c	9/10/91
+	scr_tab module in all variants of s.lib was empty
+
+string/strnicmp.a68	9/11/91
+	strnicmp crashed programs because it was accessing stack args in wrong
+	place, and was not popping a register that it pushed before returning
+
+stdio/_format.c
+	printf("%g", 1e10) printed 1e-01
+	same problem for ftoa
+
+stdio/scan.c
+	programs using 68881 and scanf gurued
+
+stdio/_format.c
+	printf etc not doing 0-fill if the conversion specified a precision.
+	e.g. 
+		printf("%05.0f", f);
+
+ami_ffp/#?	9/11/91
+	Added the following routines to the ffp libraries
+		atan2
+		frexp
+		ldexp
+
+m#?/ldexp	9/11/91
+	changed all ldexp's to return 0 on underflow instead of -HUGEVAL
+
+mx_ieee/sqrt	9/11/91
+	changed sqrt to detect ldexp's returning 0, and have sqrt return 0
+
+time/strftime	9/12/91
+	%p option changing from AM to PM at 11am
+
+sysio/stat	9/12/91
+	stat() returns time as seconds since 1/1/78, while ctime() is passed
+	seconds since 1/1/70. Instead of changing stat, we added a #define of
+	TIME_MCH2AZTEC to stat.h and time.h that adjusts st_mtime to 
+	time_t format.
+
+time/localtim.c	9/13/91
+	changing localtim() to set tm_isdst to -1, since we don't know if it's
+	daylight savings time or not. Need to add support for long form of
+	TZ environment variable.
+
+time/gmtime		9/13/91
+	In order to get gmtime to work, you need to mset an environment variable
+	named TZ:
+		mset TZ=EST5EDT
+	Aztec doesn't yet support the long form for TZ:
+		TZ=EST5:00:00EDT4:00:00;117/2:00:00,299/2:00:00
+	where
+		   EST = 		time zone code
+		   5:00:00 = 	offset to GMT for normal time
+		   EDT			daylight savings time code
+		   4:00:00 = 	offset to GMT for DST
+		   117/2:00:00 =day of year/time on which DST begins
+		   229/2:00:00 =day of year/time on which DST ends
+
+
+sysio/_ioctl.c	9/16/91
+	modified _ioctl() to work with windows any windows that a process
+	opens, not just a cli window.
+
+sysio/segload.a68 9/16/91 Rene' Vega
+	segload() modified to return status of load.
+	.segload modified to put up recoverable alert if a load fails.
+
+glue20/dos/DoPkt?.a68 9/30/91 
+	changed 'move.l' to 'movem.l' for loading args into regs
+

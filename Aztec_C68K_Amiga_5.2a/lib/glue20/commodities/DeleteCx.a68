@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_CxBase
+	xdef	_DeleteCxObj
+_DeleteCxObj:
+	move.l	a6,-(sp)
+	move.l	_CxBase,a6
+	move.l	8(sp),a0
+	jsr	-48(a6)
+	move.l	(sp)+,a6
+	rts

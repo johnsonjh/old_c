@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_UtilityBase
+	xdef	_Date2Amiga
+_Date2Amiga:
+	move.l	a6,-(sp)
+	move.l	_UtilityBase,a6
+	move.l	8(sp),a0
+	jsr	-126(a6)
+	move.l	(sp)+,a6
+	rts

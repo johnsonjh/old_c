@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_ScalerDiv
+_ScalerDiv:
+	movem.l	a6/d2,-(sp)
+	move.l	_GfxBase,a6
+	movem.l	12(sp),d0/d1/d2
+	jsr	-684(a6)
+	movem.l	(sp)+,a6/d2
+	rts

@@ -1,0 +1,13 @@
+;:ts=8
+
+	xref	_GfxBase
+	xdef	_WritePixelLine8
+_WritePixelLine8:
+	movem.l	a6/d2/a2,-(sp)
+	move.l	_GfxBase,a6
+	move.l	16(sp),a0
+	movem.l	20(sp),d0/d1/d2/a2
+	move.l	36(sp),a1
+	jsr	-774(a6)
+	movem.l	(sp)+,a6/d2/a2
+	rts

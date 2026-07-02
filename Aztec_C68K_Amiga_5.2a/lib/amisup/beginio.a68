@@ -1,0 +1,12 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	_BeginIO
+_BeginIO
+	move.l	a6,-(sp)
+	move.l	8(sp),a1
+	move.l	20(a1),a6
+	jsr	-30(a6)
+	move.l	(sp)+,a6
+	rts
+

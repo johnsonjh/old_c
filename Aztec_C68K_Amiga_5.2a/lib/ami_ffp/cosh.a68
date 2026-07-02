@@ -1,0 +1,10 @@
+; Copyright (C) 1985 by Manx Software Systems, Inc.
+; :ts=8
+
+	public	amiga_math
+	public	_LVOSPCosh
+	public	_cosh
+_cosh
+	move.w	#_LVOSPCosh,-(sp)
+	jmp	amiga_math
+

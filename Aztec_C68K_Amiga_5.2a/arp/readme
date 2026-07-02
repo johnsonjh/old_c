@@ -1,0 +1,67 @@
+ARP support files for Aztec C 5.0a
+----------------------------------
+
+Compiled by Bill Barton (bix: peabody)
+
+
+directories:
+    lib     - contains object modules and libraries
+    include - include files
+    src     - source code to libraries
+    tools   - handy tools
+
+lib
+    contents:
+	arp*.lib     - full ARP glue + ARPified c.lib functions + ARP
+		       startup.
+
+	a*.lib	     - ARP glue only (no startup, no c.lib functions).
+
+	gads.o*      - GADS() implementation of _cli_parse() for ARP
+		       argument template processing.
+
+	arpdetach.o* - ARP version of detach.o*.
+
+    model:
+	*.lib	 - small code/data, 32 bit ints
+	*16.lib  - small code/data, 16 bit ints
+	*l.lib	 - large code/data, 32 bit ints
+	*16l.lib - large code/data, 16 bit ints
+
+	*.oss	 - small code/data, 16 bit ints
+	*.ols	 - small code/data, 32 bit ints
+	*.osl	 - large code/data, 16 bit ints
+	*.oll	 - large code/data, 32 bit ints
+
+
+include/libraries
+    arpbase.h - new version of arpbase.h compatible w/ Aztec C v5.0a.
+
+    arp.p     - Arp #pragmas for inline function calls.  This file is
+		accessed by arpbase.h.	These #pragmas are compatible
+		with both Lattice C 5.0 and Aztec C 5.0a.
+
+src
+    arp_lib.fd	- new ARP .FD file (has a couple of bug fixes)
+    clihelp.c	- default CLIHelp string
+    cliparse.c	- non-GADS (default) version of _cli_parse()
+    clitemp.c	- default CLITemplate string
+    crt0.asm	- Aztec C startup code
+    dospkt.c	- ARP implementation of Aztec function dospkt()
+    exit.c	- Aztec C exit code
+    fmalloc.c	- ARP implementation of malloc(), etc.
+    fprintf.asm - FPrintf() glue
+    gads.c	- GADS version of _cli_parse()
+    printf.asm	- Printf() glue
+    scdir.c	- ARP implementation of scdir()
+    sprintf.asm - SPrintf() glue
+    toupper.asm - Toupper() glue
+    tracker.asm - resource tracking functions glue
+    vars.c	- Aztec C globals
+    _main.c	- Aztec C startup code
+    _exit.c	- Aztec C exit code
+
+tools
+    bind     - program to generate glue libraries from an .fd file.
+    bindfile - rule file for use with bind.
+

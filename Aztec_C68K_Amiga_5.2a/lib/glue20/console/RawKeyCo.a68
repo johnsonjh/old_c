@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_ConsoleDevice
+	xdef	_RawKeyConvert
+_RawKeyConvert:
+	movem.l	a6/a2,-(sp)
+	move.l	_ConsoleDevice,a6
+	movem.l	12(sp),a0/a1
+	movem.l	20(sp),d1/a2
+	jsr	-48(a6)
+	movem.l	(sp)+,a6/a2
+	rts

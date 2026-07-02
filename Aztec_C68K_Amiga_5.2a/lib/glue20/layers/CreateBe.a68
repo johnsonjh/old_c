@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_LayersBase
+	xdef	_CreateBehindLayer
+_CreateBehindLayer:
+	movem.l	a6/d2/d3/d4/a2,-(sp)
+	move.l	_LayersBase,a6
+	movem.l	24(sp),a0/a1
+	movem.l	32(sp),d0/d1/d2/d3/d4/a2
+	jsr	-42(a6)
+	movem.l	(sp)+,a6/d2/d3/d4/a2
+	rts

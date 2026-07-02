@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_MiscBase
+	xdef	_AllocMiscResource
+_AllocMiscResource:
+	move.l	a6,-(sp)
+	move.l	_MiscBase,a6
+	movem.l	8(sp),d0/a1
+	jsr	-6(a6)
+	move.l	(sp)+,a6
+	rts

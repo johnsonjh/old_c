@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IFFParseBase
+	xdef	_EntryHandler
+_EntryHandler:
+	movem.l	a6/d2,-(sp)
+	move.l	_IFFParseBase,a6
+	move.l	12(sp),a0
+	movem.l	16(sp),d0/d1/d2/a1
+	jsr	-102(a6)
+	movem.l	(sp)+,a6/d2
+	rts

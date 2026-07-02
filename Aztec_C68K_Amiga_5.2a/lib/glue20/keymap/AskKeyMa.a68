@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_KeymapBase
+	xdef	_AskKeyMapDefault
+_AskKeyMapDefault:
+	move.l	a6,-(sp)
+	move.l	_KeymapBase,a6
+	jsr	-36(a6)
+	move.l	(sp)+,a6
+	rts

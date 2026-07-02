@@ -1,0 +1,11 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_AddMemList
+_AddMemList:
+	movem.l	a6/d2,-(sp)
+	move.l	_SysBase,a6
+	movem.l	12(sp),d0/d1/d2/a0/a1
+	jsr	-618(a6)
+	movem.l	(sp)+,a6/d2
+	rts

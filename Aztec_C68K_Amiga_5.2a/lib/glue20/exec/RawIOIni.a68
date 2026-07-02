@@ -1,0 +1,10 @@
+;:ts=8
+
+	xref	_SysBase
+	xdef	_RawIOInit
+_RawIOInit:
+	move.l	a6,-(sp)
+	move.l	_SysBase,a6
+	jsr	-504(a6)
+	move.l	(sp)+,a6
+	rts

@@ -1,0 +1,25 @@
+; Copyright (C) 1986 by Manx Software Systems, Inc.
+; :ts=8
+;
+; Convert unsigned long to float
+; jd 4/3/91 SCR 18
+;
+	public	.Fflu
+.Fflu:
+	tst.l	d0
+	bmi	isneg
+	jmp	.Fflt
+isneg:
+	and.l	#$7fffffff,d0	;float all but high bit
+	jsr	.Fflt
+	move.l	#$80000060,d1	; 0x80000000 in float form
+	jsr	.Fadd#		; add the two parts
+	rts
+;
+; Convert signed long to float
+;
+	public	.Fflt
+.Fflt:
+	move.l	#_LVOSPFlt#,-(sp)
+	jmp	amiga_ffp#
+

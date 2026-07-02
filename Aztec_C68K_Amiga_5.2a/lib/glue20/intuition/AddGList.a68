@@ -1,0 +1,12 @@
+;:ts=8
+
+	xref	_IntuitionBase
+	xdef	_AddGList
+_AddGList:
+	movem.l	a6/a2,-(sp)
+	move.l	_IntuitionBase,a6
+	movem.l	12(sp),a0/a1
+	movem.l	20(sp),d0/d1/a2
+	jsr	-438(a6)
+	movem.l	(sp)+,a6/a2
+	rts
