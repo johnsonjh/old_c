@@ -291,8 +291,7 @@ int write( fd, buffer, count ) int fd; char * buffer; int count;
     int i, result;
     struct FCBCPM68K * pfcb;
     uint8_t * pdma, * buf;
-    int remaining, to_copy, remainder;
-    long record;
+    int remaining, to_copy, remainder, record;
 
     if ( 0 == count )
         return 0;
@@ -409,8 +408,7 @@ static long file_size( pfcb ) struct FCBCPM68K * pfcb;
 
 int read( fd, buffer, count ) int fd; char * buffer; int count;
 {
-    int i, result, remaining, to_copy, remainder;
-    long record;
+    int i, result, remaining, record, to_copy, remainder;
     struct FCBCPM68K * pfcb;
     uint8_t * pdma, * buf;
     long size;
