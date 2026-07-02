@@ -1,6 +1,6 @@
 /*
     This file provides the layer Aztec C calls to do OS-specific work.
-    Version of Aztec C: C68k/ROM v3.6b, for PCDOS/MSDOS Host Systems 
+    Version of Aztec C: C68k/ROM v3.6b, for PCDOS/MSDOS Host Systems
 
     This file implements: open lseek creat rename close unlink read ioctl write isatty
 
@@ -40,18 +40,18 @@ typedef int8_t bool;
 
 struct FCBCPM68K
 {
-    uint8_t dr; 
+    uint8_t dr;
     char n[ 8 ];
     char t[ 3 ];
-    uint8_t ex; 
+    uint8_t ex;
     uint8_t s1;
-    uint8_t s2; 
-    uint8_t rc; 
+    uint8_t s2;
+    uint8_t rc;
     uint32_t current_offset;
     uint8_t d[ 12 ];
-    uint8_t cr;   
+    uint8_t cr;
     uint8_t r0;  /* r0 and r1 are a 16-bit count of 128 byte records in CP/M 2.2. For CP/M 68K, reverse the byte ordering and add r2 */
-    uint8_t r1;   
+    uint8_t r1;
     uint8_t r2;
 };
 
@@ -119,7 +119,7 @@ bool valid_cpm_filename( pc ) char * pc;
     if ( !strcmp( pc, ".." ) )
         return false;
 
-    invlen = strlen( pcInvalid );    
+    invlen = strlen( pcInvalid );
     for ( i = 0; i < invlen; i++ )
         if ( strchr( pc, pcInvalid[ i ] ) )
             return false;
@@ -335,7 +335,7 @@ int write( fd, buffer, count ) int fd; char * buffer; int count;
             record = pfcb->current_offset / 128;
             SetRandomIOOffset( pfcb, (uint32_t) record );
             remainder = (int) ( pfcb->current_offset % 128 );
-    
+
             if ( ( 0 != remainder ) || ( remaining < 128 ) ) /* read, update, then write a 128 byte record */
             {
                 result = bdos_cpm( (uint32_t) 33, (long) pfcb ); /* random read of record to be updated */
@@ -449,7 +449,7 @@ int read( fd, buffer, count ) int fd; char * buffer; int count;
                 break;
 
             remainder = pfcb->current_offset % 128;
-    
+
             if ( ( 0 != remainder ) || ( remaining < 128 ) )
             {
                 int result = bdos_cpm( (long) 33, (long) pfcb ); /* random read of record */
